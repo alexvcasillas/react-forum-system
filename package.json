@@ -1,0 +1,17 @@
+{
+  "name": "react-forum-system",
+  "version": "0.1.0",
+  "description": "React Forum System",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "frontend:dev": "yarn workspace frontend start",
+    "backend:dev": "yarn workspace backend start"
+  },
+  "repository": "https://github.com/alexvcasillas/react-forum-system.git",
+  "author": "Alex Casillas <alexvcasillas@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
