@@ -1,6 +1,6 @@
 ### React Forum System
 
-React Forum System (RFS) aims to provide a simple, yet efective forum system with the latest cutting-edge techonologies out there in the market.
+React Forum System (RFS) aims to provide a simple, yet effective forum system with the latest cutting-edge techonologies out there in the market.
 
 ### What techonologies does RFS uses?
 
