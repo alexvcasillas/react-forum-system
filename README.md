@@ -33,8 +33,8 @@ To get started using RFS you need to:
 1. Clone: `git clone https://github.com/alexvcasillas/react-forum-system.git`
 2. Navigate to the proyect folder: `cd react-forum-system`.
 3. Install dependencies: `yarn install`
-4. Run the backend: `yarn backend:start",
-5. Run the frontend: `yarn frontend:start",
+4. Run the backend: `yarn backend:dev`,
+5. Run the frontend: `yarn frontend:dev`,
 6. Navigate to `http://localhost:3000` and start developing! :)
 
 ### How to build
