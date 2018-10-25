@@ -1,10 +1,10 @@
 import { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLEnumType } from 'graphql';
 
-const RoleType = new GraphQLEnumType({
+export const RoleType = new GraphQLEnumType({
   name: 'role',
   values: {
     ADMIN: { value: 'ADMIN' },
-    CLIENT: { value: 'CLIENT' },
+    USER: { value: 'USER' },
   },
 });
 
@@ -14,11 +14,9 @@ export const UserType = new GraphQLObjectType({
 
   fields: () => ({
     id: { type: GraphQLString, resolve: user => user._id.toString() },
-    dni: { type: GraphQLString },
-    name: { type: GraphQLString },
-    lastName: { type: GraphQLString },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
+    username: { type: GraphQLString },
     avatar: { type: GraphQLString },
     role: { type: RoleType },
     createdAt: { type: GraphQLString, resolve: user => user.createdAt.toString() },
