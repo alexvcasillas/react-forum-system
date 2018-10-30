@@ -1,25 +1,17 @@
-import Head from 'next/head';
+import styled from 'styled-components';
+
 import Navigation from '../components/navigation/navigation.component';
 import Communities from '../components/communities/communities.component';
-import Threads from '../components/threads/threads.component';
 
-export default class Community extends React.Component {
-  static async getInitialProps({ req }) {
-    const url = new URL(`${req.headers.host}/${req.url}`);
-    return { community: url.searchParams.get('c') };
-  }
+const Community = styled.div`
+  display: grid;
+  grid-template-areas: 'navigation communities threads';
+  grid-template-columns: 250px 350px auto;
+`;
 
-  render() {
-    const { community } = this.props;
-    return (
-      <>
-        <Head>
-          <title>React Forum System - {community} community</title>
-        </Head>
-        <Navigation />
-        <Communities />
-        <Threads />
-      </>
-    );
-  }
-}
+export default () => (
+  <Community>
+    <Navigation />
+    <Communities />
+  </Community>
+);

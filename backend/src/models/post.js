@@ -1,4 +1,4 @@
-export default mongoose => {
+module.exports = mongoose => {
   const Schema = mongoose.Schema;
   const PostSchema = new Schema({
     thread: { type: Schema.Types.ObjectId, required: true },

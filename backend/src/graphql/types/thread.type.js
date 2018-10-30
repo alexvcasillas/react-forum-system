@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 import { UserType } from './user.type';
-import { ForumType } from './forum.type';
+import { CommunityType } from './community.type';
 
 export const ThreadType = new GraphQLObjectType({
   name: 'Thread',
@@ -10,10 +10,10 @@ export const ThreadType = new GraphQLObjectType({
     id: { type: GraphQLString, resolve: thread => thread._id.toString() },
     title: { type: GraphQLString },
     description: { type: GraphQLString },
-    forum: {
-      type: ForumType,
+    community: {
+      type: CommunityType,
       resolve: async (thread, args, { loaders }) => {
-        return await loaders.forum.load(thread.forum);
+        return await loaders.community.load(thread.community);
       },
     },
     author: {

@@ -32,64 +32,31 @@ export const Loaders = ({ db }) => {
     return { load, cache };
   };
 
-  const CategoryLoader = () => {
-    let memoizedCategory = {};
+  const CommunityLoader = () => {
+    let memoizedCommunity = {};
     /**
-     * This method loads and caches the category by the given id
-     * @param {string} category identifier
+     * This method loads and caches the community by the given id
+     * @param {string} community identifier
      */
     const load = async id => {
-      if (memoizedCategory[id]) return memoizedCategory[id];
+      if (memoizedCommunity[id]) return memoizedCommunity[id];
       try {
-        memoizedCategory[id] = await db.category.findById(id).lean();
+        memoizedCommunity[id] = await db.community.findById(id).lean();
       } catch (error) {
-        console.log('Error Loading Category: ', id);
+        console.log('Error Loading Community: ', id);
       }
-      return memoizedCategory[id];
+      return memoizedCommunity[id];
     };
     /**
-     * This method caches the given categories array
-     * @param {Array} categories Array
-     * @returns {object} category
+     * This method caches the given communities array
+     * @param {Array} communities Array
+     * @returns {object} community
      */
-    const cache = categories => {
+    const cache = communities => {
       return new Promise(resolve => {
-        categories.forEach(category => {
-          if (!memoizedCategory[category._id]) {
-            memoizedCategory[category._id] = category;
-          }
-        });
-        resolve();
-      });
-    };
-    return { load, cache };
-  };
-
-  const ForumLoader = () => {
-    let memoizedForum = {};
-    /**
-     * This method loads and caches the forum by the given id
-     * @param {string} user identifier
-     */
-    const load = async id => {
-      if (memoizedForum[id]) return memoizedForum[id];
-      try {
-        memoizedForum[id] = await db.forum.findById(id).lean();
-      } catch (error) {
-        console.log('Error Loading Forum: ', id);
-      }
-      return memoizedForum[id];
-    };
-    /**
-     * This method caches the given forums array
-     * @param {Array} forums Array
-     * @returns {object} category
-     */
-    const cache = forums => {
-      return new Promise(resolve => {
-        forums.forEach(forum => {
-          if (!memoizedForum[forum._id]) {
-            memoizedForum[forum._id] = forum;
+        communities.forEach(community => {
+          if (!memoizedCommunity[community._id]) {
+            memoizedCommunity[community._id] = community;
           }
         });
         resolve();
@@ -166,8 +133,7 @@ export const Loaders = ({ db }) => {
 
   return {
     UserLoader,
-    CategoryLoader,
-    ForumLoader,
+    CommunityLoader,
     ThreadLoader,
     PostLoader,
   };

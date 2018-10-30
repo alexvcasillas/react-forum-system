@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+
 import Community from '../community/community.component';
 
 const Communities = styled.section`
@@ -49,12 +52,27 @@ const data = [
   },
 ];
 
+const ALL_COMMUNITIES_QUERY = gql`
+  query ALL_COMMUNITIES_QUERY {
+    communities {
+      id
+      title
+      description
+      picture
+    }
+  }
+`;
+
 export default () => (
   <>
     <Communities>
-      {data.map(community => (
-        <Community key={community.id} {...community} />
-      ))}
+      <Query query={ALL_COMMUNITIES_QUERY}>
+        {({ data, error, loading }) => {
+          if (loading) return <p>Loading communities...</p>;
+          if (error) return <p>Error: {error.message}</p>;
+          data.map(community => <Community key={community.id} {...community} />);
+        }}
+      </Query>
     </Communities>
   </>
 );

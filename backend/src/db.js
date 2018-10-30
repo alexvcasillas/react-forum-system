@@ -21,10 +21,9 @@ export default callback => {
       }
       const db = {
         user: require('./models/user')(mongoose),
-        category: require('./models/category')(mongoose),
-        // forum: require('./models/forum')(mongoose),
-        // thread: require('./models/thread')(mongoose),
-        // post: require('./models/post')(mongoose),
+        community: require('./models/community')(mongoose),
+        thread: require('./models/thread')(mongoose),
+        post: require('./models/post')(mongoose),
       };
       callback(db);
     })

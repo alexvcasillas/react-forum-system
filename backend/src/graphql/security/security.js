@@ -1,3 +1,6 @@
+import { GraphQLError } from 'graphql';
+import { Response } from '../utils/responses.utils';
+
 export const Security = (db, auth) => {
   /**
    * This method ensures that the request is
@@ -6,13 +9,9 @@ export const Security = (db, auth) => {
    * @param {Object} HTTP Request Headers
    * @returns {Object} Authentication Object contained within the JWT
    */
-  const ensureAuthenticated = (headers = {}) =>
+  const ensureAuthenticated = (token = null) =>
     new Promise(async (resolve, reject) => {
-      if (!headers.hasOwnProperty('authorization')) {
-        return reject(false);
-      }
-      const [type, token] = [...headers.authorization.split(' ')];
-      if (type !== 'Bearer') {
+      if (!token) {
         return reject(false);
       }
       let verificationResult;
@@ -31,13 +30,9 @@ export const Security = (db, auth) => {
    * @param {Object} HTTP Request Headers
    * @returns {Object} Authentication Object contained within the JWT
    */
-  const ensureAuthenticatedAdmin = (headers = {}) =>
+  const ensureAuthenticatedAdmin = (token = null) =>
     new Promise(async (resolve, reject) => {
-      if (!headers.hasOwnProperty('authorization')) {
-        return reject(false);
-      }
-      const [type, token] = [...headers.authorization.split(' ')];
-      if (type !== 'Bearer') {
+      if (!token) {
         return reject(false);
       }
       let verificationResult;

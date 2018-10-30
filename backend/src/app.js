@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import chalk from 'chalk';
 import initializeDb from './db';
 import config from './config.json';
@@ -23,6 +24,8 @@ app.use(morgan('dev'));
 app.use(
   cors({
     exposedHeaders: config.corsHeaders,
+    credentials: true,
+    origin: 'http://localhost:3000',
   }),
 );
 
@@ -32,32 +35,28 @@ app.use(
   }),
 );
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // connect to db
 initializeDb(db => {
   // Auth Service
   const auth = authService();
 
-  app.use((req, res, next) => {
-    req.auth = auth;
-    return next();
-  });
-
-  const { UserLoader, CategoryLoader, ForumLoader, ThreadLoader, PostLoader } = Loaders({ db });
+  const { UserLoader, CommunityLoader, ThreadLoader, PostLoader } = Loaders({ db });
 
   app.use(
     '/graphql',
-    graphqlHTTP(req => {
+    graphqlHTTP((req, res) => {
       return {
         context: {
           loaders: {
             user: new UserLoader(),
-            category: new CategoryLoader(),
-            forum: new ForumLoader(),
+            community: new CommunityLoader(),
             thread: new ThreadLoader(),
             post: new PostLoader(),
           },
           headers: req.headers,
+          cookie: res.cookie,
         },
         schema: GraphQLService({ config, db, auth }),
         graphiql: true,

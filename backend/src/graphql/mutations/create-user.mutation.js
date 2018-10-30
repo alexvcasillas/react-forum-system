@@ -9,7 +9,7 @@ export const CreateUser = (security, db, auth) => ({
     password: { type: GraphQLString },
     username: { type: GraphQLString },
   },
-  resolve: async (root, args, context) => {
+  resolve: async (root, args, { cookie }) => {
     if (
       !args.email ||
       args.email === '' ||
@@ -57,17 +57,10 @@ export const CreateUser = (security, db, auth) => ({
         }),
       );
     }
-    user.token = authToken;
-    try {
-      await user.save();
-    } catch (error) {
-      return new GraphQLError(
-        Response({
-          status: 500,
-          message: `An error ocurred while settings the authentication token to the user.`,
-        }),
-      );
-    }
+    cookie('token', authToken, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
+    });
     return user.toObject();
   },
 });

@@ -1,7 +1,7 @@
-export default mongoose => {
+module.exports = mongoose => {
   const Schema = mongoose.Schema;
   const ThreadSchema = new Schema({
-    forum: { type: Schema.Types.ObjectId, required: true },
+    community: { type: Schema.Types.ObjectId, required: true },
     title: { type: String, required: true },
     author: { type: Schema.Types.ObjectId, required: true },
     content: { type: String, required: true },

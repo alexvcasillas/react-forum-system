@@ -9,8 +9,8 @@ export const UpdateUser = (security, db) => ({
     lastName: { type: GraphQLString },
     avatar: { type: GraphQLString },
   },
-  resolve: (root, { name, lastName, avatar }, { headers }) => {
-    return security.ensureAuthenticated(headers).then(async authData => {
+  resolve: (root, { name, lastName, avatar }, { headers, token }) => {
+    return security.ensureAuthenticated(token).then(async authData => {
       let user;
       try {
         user = await db.user.findById(authData.identifier);

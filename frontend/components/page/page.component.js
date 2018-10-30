@@ -8,12 +8,6 @@ const theme = {
   scheme,
 };
 
-const Inner = styled.div`
-  display: grid;
-  grid-template-areas: 'navigation communities threads';
-  grid-template-columns: 250px 350px auto;
-`;
-
 const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
@@ -30,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${theme.scheme.gray[1]};
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
     color: #343a40;
+    min-height: 100vh;
   }
   a {
     text-decoration: none;
@@ -44,7 +39,7 @@ class Page extends Component {
         <>
           <GlobalStyle />
           <Meta />
-          <Inner>{this.props.children}</Inner>
+          {this.props.children}
         </>
       </ThemeProvider>
     );
