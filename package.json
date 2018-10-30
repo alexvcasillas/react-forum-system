@@ -7,7 +7,7 @@
     "backend"
   ],
   "scripts": {
-    "frontend:dev": "yarn workspace frontend start",
+    "frontend:dev": "yarn workspace frontend dev",
     "backend:dev": "yarn workspace backend start"
   },
   "repository": "https://github.com/alexvcasillas/react-forum-system.git",

@@ -6,8 +6,12 @@
 # testing
 /coverage
 
+# next cache
+/.next
+
 # production
 /build
+/dist
 
 # misc
 .DS_Store
