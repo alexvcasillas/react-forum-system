@@ -78,9 +78,9 @@ export default ({ id, name, description, picture, threads, likes }) => {
 
   useEffect(() => {
     const {
-      query: { community },
+      query: { c },
     } = Router;
-    if (community === id) {
+    if (c === id) {
       setActive(true);
     } else {
       setActive(false);

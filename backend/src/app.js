@@ -49,6 +49,8 @@ initializeDb(db => {
     graphqlHTTP((req, res) => {
       return {
         context: {
+          request: req,
+          response: res,
           loaders: {
             user: new UserLoader(),
             community: new CommunityLoader(),
@@ -56,7 +58,7 @@ initializeDb(db => {
             post: new PostLoader(),
           },
           headers: req.headers,
-          cookie: res.cookie,
+          token: req.cookies.token || null,
         },
         schema: GraphQLService({ config, db, auth }),
         graphiql: true,
