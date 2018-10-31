@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Navigation from '../components/navigation/navigation.component';
 import Communities from '../components/communities/communities.component';
 import Threads from '../components/threads/threads.component';
+import Writter from '../components/writter/writter.component';
 
 const Community = styled.div`
   display: grid;
@@ -15,5 +16,6 @@ export default props => (
     <Navigation />
     <Communities />
     <Threads community={props.query.c} />
+    {props.query.action === 'new' && <Writter />}
   </Community>
 );
