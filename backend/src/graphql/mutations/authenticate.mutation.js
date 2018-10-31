@@ -2,13 +2,13 @@ import { GraphQLNonNull, GraphQLString, GraphQLError } from 'graphql';
 import { UserType } from '../types/user.type';
 import { Response, NOT_FOUND, MISSING_PARAMETERS } from '../utils/responses.utils';
 
-export const AuthenticateMutation = (security, db, auth) => ({
+export const AuthenticateMutation = () => ({
   type: UserType,
   args: {
     email: { type: GraphQLNonNull(GraphQLString) },
     password: { type: GraphQLNonNull(GraphQLString) },
   },
-  resolve: async (root, { email, password }, context) => {
+  resolve: async (root, { email, password }, { response, db, auth }) => {
     if (email === '' || password === '') return MISSING_PARAMETERS;
     const user = await db.user.findOne({ email });
     if (!user) return NOT_FOUND;
@@ -25,7 +25,7 @@ export const AuthenticateMutation = (security, db, auth) => ({
         }),
       );
     }
-    context.response.cookie('token', authToken, {
+    response.cookie('token', authToken, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
     });

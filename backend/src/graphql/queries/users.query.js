@@ -1,9 +1,9 @@
 import { GraphQLList } from 'graphql';
 import { UserType } from '../types/user.type';
 
-export const UsersQuery = (security, db) => ({
+export const UsersQuery = () => ({
   type: GraphQLList(UserType),
-  resolve: (root, args, { headers, loaders, token }) => {
+  resolve: (root, args, { headers, loaders, token, security, db }) => {
     return security.ensureAuthenticatedAdmin(token).then(async authData => {
       const users = await db.user.find().lean();
       await loaders.user.cache(users);

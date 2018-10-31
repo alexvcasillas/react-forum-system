@@ -8,7 +8,7 @@ export const UpdatePassword = (security, db) => ({
     password: { type: GraphQLString },
     newPassword: { type: GraphQLString },
   },
-  resolve: (root, { password, newPassword }, { headers, token }) => {
+  resolve: (root, { password, newPassword }, { headers, token, security, db }) => {
     return security.ensureAuthenticated(token).then(async authData => {
       if (!password || password === '' || !newPassword || newPassword === '') {
         return MISSING_PARAMETERS;

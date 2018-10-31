@@ -1,7 +1,7 @@
 module.exports = mongoose => {
   const Schema = mongoose.Schema;
   const CommunitySchema = new Schema({
-    title: { type: String, required: true },
+    name: { type: String, required: true },
     description: { type: String },
     picture: { type: String },
     createdAt: { type: Date, default: Date.now() },

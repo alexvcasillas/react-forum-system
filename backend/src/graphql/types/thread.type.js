@@ -9,7 +9,7 @@ export const ThreadType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLString, resolve: thread => thread._id.toString() },
     title: { type: GraphQLString },
-    description: { type: GraphQLString },
+    content: { type: GraphQLString },
     community: {
       type: CommunityType,
       resolve: async (thread, args, { loaders }) => {

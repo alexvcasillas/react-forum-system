@@ -9,7 +9,7 @@ export const UpdateUser = (security, db) => ({
     lastName: { type: GraphQLString },
     avatar: { type: GraphQLString },
   },
-  resolve: (root, { name, lastName, avatar }, { headers, token }) => {
+  resolve: (root, { name, lastName, avatar }, { headers, token, security, db }) => {
     return security.ensureAuthenticated(token).then(async authData => {
       let user;
       try {

@@ -13,6 +13,8 @@ require('dotenv').config();
 
 import { GraphQLService } from './graphql/graphql.service';
 import { Loaders } from './graphql/graphql.loaders';
+// SECURITY
+import { Security } from './graphql/security/security';
 
 let app = express();
 app.server = http.createServer(app);
@@ -41,6 +43,8 @@ app.use(cookieParser());
 initializeDb(db => {
   // Auth Service
   const auth = authService();
+  // Import the Secutiry Stuff for Queries and Mutations
+  const security = Security(db, auth);
 
   const { UserLoader, CommunityLoader, ThreadLoader, PostLoader } = Loaders({ db });
 
@@ -59,8 +63,11 @@ initializeDb(db => {
           },
           headers: req.headers,
           token: req.cookies.token || null,
+          db: db,
+          auth: auth,
+          security: security,
         },
-        schema: GraphQLService({ config, db, auth }),
+        schema: GraphQLService(),
         graphiql: true,
         // formatError: err => {
         //   return err;

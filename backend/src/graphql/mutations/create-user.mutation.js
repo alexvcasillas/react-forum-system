@@ -2,14 +2,14 @@ import { GraphQLError, GraphQLString } from 'graphql';
 import { UserType } from '../types/user.type';
 import { Response, UNEXPECTED_ERROR, MISSING_PARAMETERS } from '../utils/responses.utils';
 
-export const CreateUser = (security, db, auth) => ({
+export const CreateUser = () => ({
   type: UserType,
   args: {
     email: { type: GraphQLString },
     password: { type: GraphQLString },
     username: { type: GraphQLString },
   },
-  resolve: async (root, args, { cookie }) => {
+  resolve: async (root, args, { db, auth, response }) => {
     if (
       !args.email ||
       args.email === '' ||
@@ -57,7 +57,7 @@ export const CreateUser = (security, db, auth) => ({
         }),
       );
     }
-    cookie('token', authToken, {
+    rsponse.cookie('token', authToken, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
     });

@@ -73,19 +73,26 @@ const StatValue = styled.span`
   color: ${({ theme }) => theme.scheme.gray[8]};
 `;
 
-export default ({ id, name, description, picture, threads, likes }) => {
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export default ({ id, name, description, picture, threads_count, likes }) => {
   const [active, setActive] = useState(false);
 
-  useEffect(() => {
-    const {
-      query: { c },
-    } = Router;
-    if (c === id) {
-      setActive(true);
-    } else {
-      setActive(false);
-    }
-  });
+  useEffect(
+    () => {
+      const {
+        query: { c },
+      } = Router;
+      if (c === id) {
+        setActive(true);
+      } else {
+        setActive(false);
+      }
+    },
+    [Router.query.c],
+  );
 
   return (
     <>
@@ -106,7 +113,7 @@ export default ({ id, name, description, picture, threads, likes }) => {
               </CommunityStat>
               <CommunityStat>
                 <ThreadsIcon />
-                <StatValue>{threads}</StatValue>
+                <StatValue>{threads_count}</StatValue>
               </CommunityStat>
             </CommunityStats>
           </CommunityDetails>

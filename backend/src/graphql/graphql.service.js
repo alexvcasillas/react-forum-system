@@ -15,23 +15,19 @@ import { equal } from 'assert';
 import { UserQuery } from './queries/user.query';
 import { UsersQuery } from './queries/users.query';
 import { CommunitiesQuery } from './queries/communities.query';
+import { ThreadsByCommunityQuery } from './queries/threads-by-community.query';
 // MUTATIONS
 import { AuthenticateMutation } from './mutations/authenticate.mutation';
 import { CreateUser } from './mutations/create-user.mutation';
 import { UpdateUser } from './mutations/update-user.mutation';
 import { UpdatePassword } from './mutations/update-password.mutation';
 import { CreateCommunity } from './mutations/create-community.mutation';
-// SECURITY
-import { Security } from './security/security';
 
 /**
  * GraphQL Service
  * @param {Object} An object containing: Configuration, Authentication Service and Mongoose DB Access Layer
  */
-const GraphQLService = ({ config, auth, db }) => {
-  // Import the Secutiry Stuff for Queries and Mutations
-  const security = Security(db, auth);
-
+const GraphQLService = () => {
   /**
    * Object for the GraphQL Query Layer
    */
@@ -40,9 +36,10 @@ const GraphQLService = ({ config, auth, db }) => {
     description: '...',
 
     fields: () => ({
-      user: UserQuery(security),
-      users: UsersQuery(security, db),
-      communities: CommunitiesQuery(security, db),
+      user: UserQuery(),
+      users: UsersQuery(),
+      communities: CommunitiesQuery(),
+      threadsByCommunity: ThreadsByCommunityQuery(),
     }),
   });
 
@@ -55,12 +52,12 @@ const GraphQLService = ({ config, auth, db }) => {
 
     fields: () => ({
       /* Creation Mutations  */
-      authenticate: AuthenticateMutation(security, db, auth),
-      createUser: CreateUser(security, db, auth),
-      createCommunity: CreateCommunity(security, db, auth),
+      authenticate: AuthenticateMutation(),
+      createUser: CreateUser(),
+      createCommunity: CreateCommunity(),
       /* Update Mutations */
-      updateUser: UpdateUser(security, db),
-      updatePassword: UpdatePassword(security, db),
+      updateUser: UpdateUser(),
+      updatePassword: UpdatePassword(),
       /* Delete Mutations */
     }),
   });
