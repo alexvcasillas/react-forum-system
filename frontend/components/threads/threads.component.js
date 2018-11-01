@@ -24,20 +24,29 @@ const ActionsArea = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
+`;
+
+const Action = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: ${({ theme }) => theme.scheme.gray[8]};
+  color: ${({ theme }) => theme.scheme.white};
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+
+  &:active {
+    background-color: ${({ theme }) => theme.scheme.gray[7]};
+  }
 `;
 
 const ActionIcon = styled.div`
   margin-left: 10px;
-  opacity: 0.6;
-  transform: scale(1);
   transition: all 0.3s ease-in-out;
   padding-top: 2px;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.2);
-    opacity: 1;
-  }
 `;
 
 const NoThreadsFound = styled.div`
@@ -95,17 +104,13 @@ export default props => {
     <>
       <Threads>
         <ActionsArea>
-          <Input
-            type="text"
-            onChange={e => {
-              e.persist();
-              updateFilter(e.target.value);
-            }}
-          />
           <Link href={{ pathname: '/community', query: { c: props.community, action: 'new' } }}>
-            <ActionIcon>
-              <PenIcon />
-            </ActionIcon>
+            <Action>
+              New thread
+              <ActionIcon>
+                <PenIcon fill="#ffffff" />
+              </ActionIcon>
+            </Action>
           </Link>
         </ActionsArea>
         <Query query={THREADS_BY_COMMUNITY_QUERY} variables={{ community: props.community, filter: filter }}>
