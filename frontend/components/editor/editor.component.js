@@ -1,81 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Textarea from 'react-textarea-autosize';
 import styled from 'styled-components';
-import markdown from 'markdown-it';
-import debounce from 'just-debounce-it';
 
-const Editor = styled.textarea`
+const Wrapper = styled.div`
   width: 100%;
-  background-color: white;
+  height: calc(100% - 60px);
+  min-height: calc(100% - 60px);
+  max-height: calc(100% - 60px);
   padding: 20px;
+`;
+
+const Editor = styled(Textarea)`
+  width: 100%;
   font-size: 1.4rem;
   resize: none;
   outline: none;
   border: 0;
-  border-radius: 5px;
-  max-height: 100%;
-`;
-
-const Preview = styled.div`
-  width: 100%;
-  background-color: white;
-  padding: 20px;
-  font-size: 1.4rem;
-  border-radius: 5px;
+  background-color: ${({ theme }) => theme.scheme.gray[1]};
+  color: ${({ theme }) => theme.scheme.gray[8]};
+  &::placeholder {
+    color: ${({ theme }) => theme.scheme.gray[5]};
+  }
 `;
 
 export default props => {
   const [content, setContent] = useState('');
-  const editorRef = useRef(null);
-  const previewRef = useRef(null);
 
-  const md = new markdown();
-
-  function autoExpand(e, el) {
-    var el = el || e.target;
-    el.style.height = 'inherit';
-    el.style.height = el.scrollHeight + 'px';
-  }
-
-  const editContent = () => {
-    setContent(editorRef.current.value);
+  const editContent = e => {
+    setContent(e.target.value);
+    const { updatePreview } = props;
+    updatePreview(e.target.value);
   };
 
-  function focusEditor() {}
-
-  function blurEditor() {}
-
-  useEffect(
-    () => {
-      if (props.preview) {
-        const html = md.render(content);
-        previewRef.current.innerHTML = html;
-      } else {
-        editorRef.current.innerHTML = content;
-      }
-    },
-    [props.preview],
-  );
-
-  useEffect(
-    () => {
-      editorRef.current.addEventListener('paste', autoExpand);
-      editorRef.current.addEventListener('input', autoExpand);
-      editorRef.current.addEventListener('keyup', autoExpand);
-      () => {
-        editorRef.current.removeEventListener('paste', autoExpand);
-        editorRef.current.removeEventListener('input', autoExpand);
-        editorRef.current.removeEventListener('keyup', autoExpand);
-      };
-    },
-    [content],
-  );
-
   return (
-    <>
-      {props.preview && <Preview ref={previewRef} />}
-      {!props.preview && (
-        <Editor ref={editorRef} onFocus={focusEditor} onBlur={blurEditor} onChange={editContent} value={content} />
-      )}
-    </>
+    <Wrapper>
+      <Editor onChange={editContent} value={content} placeholder="Write down all your thoughts..." />
+    </Wrapper>
   );
 };

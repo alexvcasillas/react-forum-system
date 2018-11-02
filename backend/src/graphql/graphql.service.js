@@ -14,6 +14,7 @@ import { equal } from 'assert';
 // QUERIES
 import { UserQuery } from './queries/user.query';
 import { UsersQuery } from './queries/users.query';
+import { CommunityQuery } from './queries/community.query';
 import { CommunitiesQuery } from './queries/communities.query';
 import { ThreadsByCommunityQuery } from './queries/threads-by-community.query';
 // MUTATIONS
@@ -38,6 +39,7 @@ const GraphQLService = () => {
     fields: () => ({
       user: UserQuery(),
       users: UsersQuery(),
+      community: CommunityQuery(),
       communities: CommunitiesQuery(),
       threadsByCommunity: ThreadsByCommunityQuery(),
     }),

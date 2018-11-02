@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Router from 'next/router';
+import Head from 'next/head';
 
 import HeartIcon from '../svg/heart.icon';
 import ThreadsIcon from '../svg/threads.icon';
@@ -96,6 +97,11 @@ export default ({ id, name, description, picture, threads_count, likes }) => {
 
   return (
     <>
+      {active && (
+        <Head>
+          <title>RFS | {name}</title>
+        </Head>
+      )}
       <Link href={{ pathname: '/community', query: { c: id } }}>
         <Community active={active}>
           <CommunityImage

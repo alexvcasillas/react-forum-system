@@ -104,7 +104,7 @@ export default props => {
     <>
       <Threads>
         <ActionsArea>
-          <Link href={{ pathname: '/community', query: { c: props.community, action: 'new' } }}>
+          <Link href={{ pathname: '/write', query: { c: props.community } }}>
             <Action>
               New thread
               <ActionIcon>

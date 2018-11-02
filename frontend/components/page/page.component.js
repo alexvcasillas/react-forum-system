@@ -21,6 +21,17 @@ const theme = {
   scheme,
 };
 
+const Page = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+`;
+
 const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
@@ -38,6 +49,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
     color: #343a40;
     min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
   }
   a {
     text-decoration: none;
@@ -48,32 +61,19 @@ const GlobalStyle = createGlobalStyle`
     display: block;
     margin-bottom: 0.5em;
   }
-  code {
-      padding: 0 3px;
-      border: 1px solid #CCC;
-      border-radius: 2px;
-      background: #FFF;
-  }
-  pre.code {
-      padding: 2px 5px;
-      border: 1px solid #DDD;
-      background: #FFF;
-      border-left-width: 3px;
+  pre {
+    background-color: ${theme.scheme.gray[2]};
+    padding: 10px;
+    border-radius: 5;
   }
 `;
 
-class Page extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <>
-          <GlobalStyle />
-          <Meta />
-          {this.props.children}
-        </>
-      </ThemeProvider>
-    );
-  }
-}
-
-export default Page;
+export default props => (
+  <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyle />
+      <Meta />
+      <Page>{props.children}</Page>
+    </>
+  </ThemeProvider>
+);

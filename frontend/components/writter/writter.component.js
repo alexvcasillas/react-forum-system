@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import Editor from '../editor/editor.component';
+import Preview from '../preview/preview.component';
 
 import PenIcon from '../svg/pen.icon';
 
 const Writter = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  width: 100%;
+  overflow: hidden;
 `;
 
-const ActionsArea = styled.div`
-  width: 100%;
-  height: 60px;
+const WritterMeta = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   background-color: ${({ theme }) => theme.scheme.white};
   box-shadow: 0px 5px 5px 0 rgba(0, 0, 0, 0.08);
-  padding: 10px;
+  height: 80px;
+  padding: 0 20px;
+  z-index: 2;
+`;
+
+const Title = styled.div`
+  flex: 1;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  color: ${({ theme }) => theme.scheme.gray[6]};
+
+  strong {
+    font-weight: 600;
+    color: ${({ theme }) => theme.scheme.gray[8]};
+  }
+`;
+
+const Actions = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -46,22 +67,27 @@ const ActionIcon = styled.div`
   padding-top: 2px;
 `;
 
-const TitleArea = styled.div`
-  margin-top: 40px;
-  padding: 0 20px;
+const Workspace = styled.div`
+  display: grid;
+  grid-template-areas: 'editor preview';
+  grid-template-columns: 50% 50%;
+  width: 100%;
+  height: calc(100% - 80px);
+  max-height: calc(100% - 80px);
+  overflow: scroll;
 `;
 
 const EditorArea = styled.div`
-  margin: 20px;
+  grid-area: editor;
+  width: 100%;
   padding: 20px;
-  flex: 1;
-`;
-
-const BottomArea = styled.div`
-  height: 60px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid ${({ theme }) => theme.scheme.gray[4]};
 `;
 
 const ThreadTitle = styled.input`
+  height: 60px;
   width: 100%;
   background-color: ${({ theme }) => theme.scheme.gray[1]};
   padding: 10px 20px;
@@ -77,33 +103,35 @@ const ThreadTitle = styled.input`
   }
 `;
 
-export default () => {
-  const [preview, setPreview] = useState(false);
-  function togglePreview() {
-    setPreview(!preview);
+export default props => {
+  const previewRef = useRef(null);
+
+  function updatePreview(content) {
+    previewRef.current.updatePreview(content);
   }
+
   return (
     <Writter>
-      <ActionsArea>
-        <Action onClick={togglePreview}>
-          {preview ? 'Edit' : 'Preview'}
-          <ActionIcon>
-            <PenIcon fill="#ffffff" />
-          </ActionIcon>
-        </Action>
-        <Action>
-          Publish
-          <ActionIcon>
-            <PenIcon fill="#ffffff" />
-          </ActionIcon>
-        </Action>
-      </ActionsArea>
-      <TitleArea>
-        <ThreadTitle placeholder="What's up?" />
-      </TitleArea>
-      <EditorArea>
-        <Editor preview={preview} />
-      </EditorArea>
+      <WritterMeta>
+        <Title>
+          New thread on <strong>{props.community}</strong> community
+        </Title>
+        <Actions>
+          <Action>
+            Publish
+            <ActionIcon>
+              <PenIcon fill="#ffffff" />
+            </ActionIcon>
+          </Action>
+        </Actions>
+      </WritterMeta>
+      <Workspace>
+        <EditorArea>
+          <ThreadTitle placeholder="What's up?" />
+          <Editor updatePreview={updatePreview} />
+        </EditorArea>
+        <Preview ref={previewRef} />
+      </Workspace>
     </Writter>
   );
 };
