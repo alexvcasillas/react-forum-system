@@ -7,6 +7,7 @@ import Link from 'next/link';
 import debounce from 'just-debounce-it';
 
 import Auth from '../auth/auth.component';
+import Thread from '../thread/thread.component';
 
 import PenIcon from '../svg/pen.icon';
 
@@ -85,10 +86,14 @@ const Input = styled.input`
 const THREADS_BY_COMMUNITY_QUERY = gql`
   query THREADS_BY_COMMUNITY_QUERY($community: String!, $filter: String) {
     threadsByCommunity(community: $community, filter: $filter) {
+      id
       title
       content
+      createdAt
       author {
         username
+        name
+        lastName
         avatar
       }
     }
@@ -139,7 +144,7 @@ export default props => {
                   <p>It looks like there are no threads in this community.</p>
                 </NoThreadsFound>
               );
-            return <p>I've found {threadsByCommunity.length} threads!</p>;
+            return threadsByCommunity.map(thread => <Thread key={thread.id} {...thread} />);
           }}
         </Query>
       </Threads>

@@ -6,6 +6,8 @@ module.exports = mongoose => {
   const UserSchema = new Schema({
     email: { type: String, required: true, index: true, unique: true },
     password: { type: String },
+    name: { type: String },
+    lastName: { type: String },
     username: { type: String, unique: true, required: true },
     avatar: { type: String },
     role: { type: String, enum: ['ADMIN', 'USER'], default: 'USER' },

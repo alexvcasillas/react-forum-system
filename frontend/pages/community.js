@@ -15,7 +15,7 @@ export default props => (
   <Community>
     <Navigation />
     <Communities />
-    <Threads community={props.query.c} />
+    <Threads community={props.query.c} thread={props.query.t} />
     {props.query.action === 'new' && <Writter />}
   </Community>
 );
