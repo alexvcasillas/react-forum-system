@@ -16,8 +16,14 @@ export const CreateThread = () => ({
       }
       let thread;
       try {
-        thread = await db.thread.create({ community, author: authData.identifier, title, content });
+        thread = await db.thread.create({
+          community: community,
+          author: authData.identifier,
+          title: title,
+          content: content,
+        });
       } catch (error) {
+        console.log({ error });
         return GraphQLError(
           Response({
             status: 500,

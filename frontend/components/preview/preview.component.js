@@ -9,20 +9,7 @@ const Wrapper = styled.div`
   padding: 40px;
 `;
 
-export default class Preview extends Component {
-  state = { content: '' };
-
-  wrapperRef = React.createRef();
-  contentRef = React.createRef();
-
-  md = new markdown({ linkify: true }).use(emoji);
-
-  updatePreview = content => {
-    this.setState({ content });
-  };
-
-  render() {
-    const { content } = this.state;
-    return <Wrapper dangerouslySetInnerHTML={{ __html: this.md.render(content) }} />;
-  }
-}
+export default props => {
+  const md = new markdown({ linkify: true }).use(emoji);
+  return <Wrapper dangerouslySetInnerHTML={{ __html: md.render(props.content) }} />;
+};

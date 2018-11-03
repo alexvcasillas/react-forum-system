@@ -29,6 +29,7 @@ const CommunityImage = styled.div`
   background-repeat: no-repeat;
   border-radius: 5px;
   margin-top: 5px;
+  background-image: url(${({ picture }) => picture});
 `;
 
 const CommunityDetails = styled.div`
@@ -104,11 +105,7 @@ export default ({ id, name, description, picture, threads_count, likes }) => {
       )}
       <Link href={{ pathname: '/community', query: { c: id } }}>
         <Community active={active}>
-          <CommunityImage
-            style={{
-              backgroundImage: `url(${picture})`,
-            }}
-          />
+          <CommunityImage picture={picture} />
           <CommunityDetails>
             <CommunityName>{name}</CommunityName>
             <CommunityDescription>{description}</CommunityDescription>

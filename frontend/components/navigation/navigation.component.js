@@ -2,6 +2,8 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import Link from 'next/link';
 
+import Auth from '../auth/auth.component';
+
 const Navigation = styled.nav`
   grid-area: navigation;
   background-color: ${({ theme }) => theme.scheme.white};

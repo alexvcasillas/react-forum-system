@@ -12,6 +12,7 @@ import {
 import { equal } from 'assert';
 
 // QUERIES
+import { AuthQuery } from './queries/auth.query';
 import { UserQuery } from './queries/user.query';
 import { UsersQuery } from './queries/users.query';
 import { CommunityQuery } from './queries/community.query';
@@ -23,6 +24,7 @@ import { CreateUser } from './mutations/create-user.mutation';
 import { UpdateUser } from './mutations/update-user.mutation';
 import { UpdatePassword } from './mutations/update-password.mutation';
 import { CreateCommunity } from './mutations/create-community.mutation';
+import { CreateThread } from './mutations/create-thread.mutation';
 
 /**
  * GraphQL Service
@@ -37,6 +39,7 @@ const GraphQLService = () => {
     description: '...',
 
     fields: () => ({
+      auth: AuthQuery(),
       user: UserQuery(),
       users: UsersQuery(),
       community: CommunityQuery(),
@@ -57,6 +60,7 @@ const GraphQLService = () => {
       authenticate: AuthenticateMutation(),
       createUser: CreateUser(),
       createCommunity: CreateCommunity(),
+      createThread: CreateThread(),
       /* Update Mutations */
       updateUser: UpdateUser(),
       updatePassword: UpdatePassword(),

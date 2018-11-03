@@ -6,9 +6,9 @@ export const CommunityQuery = () => ({
   args: {
     id: { type: GraphQLNonNull(GraphQLString) },
   },
-  resolve: (root, { id }, { headers, loaders, token, security, db }) => {
-    return security.ensureAuthenticated(token).then(async authData => {
-      return await loaders.community.load(id);
-    }, security.onRejectedAuthentication);
+  resolve: async (root, { id }, { headers, loaders, token, security, db }) => {
+    // return security.ensureAuthenticated(token).then(async authData => {
+    return await loaders.community.load(id);
+    // }, security.onRejectedAuthentication);
   },
 });

@@ -6,9 +6,9 @@ export const UserQuery = () => ({
   args: {
     id: { type: GraphQLString },
   },
-  resolve: (root, args, { headers, loaders, token, security }) => {
-    return security.ensureAuthenticatedAdmin(token).then(async authData => {
-      return loaders.user.load(args.id);
-    }, security.onRejectedAuthentication);
+  resolve: async (root, args, { headers, loaders, token, security }) => {
+    // return security.ensureAuthenticatedAdmin(token).then(async authData => {
+    return await loaders.user.load(args.id);
+    // }, security.onRejectedAuthentication);
   },
 });

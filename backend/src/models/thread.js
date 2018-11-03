@@ -9,7 +9,7 @@ module.exports = mongoose => {
     updatedAt: { type: Date },
   });
   ThreadSchema.set('autoIndex', false);
-  ThreadSchema.pre('save', next => {
+  ThreadSchema.pre('save', function(next) {
     this.updatedAt = Date.now();
     return next();
   });

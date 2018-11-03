@@ -24,12 +24,11 @@ const Editor = styled(Textarea)`
 `;
 
 export default props => {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState(props.initialValue);
 
   const editContent = e => {
     setContent(e.target.value);
-    const { updatePreview } = props;
-    updatePreview(e.target.value);
+    props.onChange(e.target.value);
   };
 
   return (

@@ -39,7 +39,7 @@ export const CommunityType = new GraphQLObjectType({
       resolve: async (community, args, { db }) => {
         let threads_count;
         try {
-          threads_count = await db.thread.estimatedDocumentCount({ community: community._id.toString() });
+          threads_count = await db.thread.countDocuments({ community: community._id.toString() });
         } catch (error) {
           return new GraphQLError(
             Response({ status: 500, message: `An error ocurred while getting community threads` }),

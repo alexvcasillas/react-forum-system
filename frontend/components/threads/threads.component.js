@@ -6,6 +6,8 @@ import { List } from 'react-content-loader';
 import Link from 'next/link';
 import debounce from 'just-debounce-it';
 
+import Auth from '../auth/auth.component';
+
 import PenIcon from '../svg/pen.icon';
 
 const Threads = styled.section`
@@ -16,6 +18,7 @@ const Threads = styled.section`
 `;
 
 const ActionsArea = styled.div`
+  position: sticky;
   width: 100%;
   height: 60px;
   background-color: ${({ theme }) => theme.scheme.white};
@@ -104,14 +107,21 @@ export default props => {
     <>
       <Threads>
         <ActionsArea>
-          <Link href={{ pathname: '/write', query: { c: props.community } }}>
-            <Action>
-              New thread
-              <ActionIcon>
-                <PenIcon fill="#ffffff" />
-              </ActionIcon>
-            </Action>
-          </Link>
+          <Auth>
+            {auth => {
+              if (auth)
+                return (
+                  <Link href={{ pathname: '/write', query: { c: props.community } }}>
+                    <Action>
+                      New thread
+                      <ActionIcon>
+                        <PenIcon fill="#ffffff" />
+                      </ActionIcon>
+                    </Action>
+                  </Link>
+                );
+            }}
+          </Auth>
         </ActionsArea>
         <Query query={THREADS_BY_COMMUNITY_QUERY} variables={{ community: props.community, filter: filter }}>
           {({ data: { threadsByCommunity }, error, loading }) => {
@@ -129,6 +139,7 @@ export default props => {
                   <p>It looks like there are no threads in this community.</p>
                 </NoThreadsFound>
               );
+            return <p>I've found {threadsByCommunity.length} threads!</p>;
           }}
         </Query>
       </Threads>

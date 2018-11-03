@@ -8,7 +8,7 @@ module.exports = mongoose => {
     updatedAt: { type: Date },
   });
   PostSchema.set('autoIndex', false);
-  PostSchema.pre('save', next => {
+  PostSchema.pre('save', function(next) {
     this.updatedAt = Date.now();
     return next();
   });

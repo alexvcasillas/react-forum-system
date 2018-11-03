@@ -19,7 +19,7 @@ export const ThreadType = new GraphQLObjectType({
     author: {
       type: UserType,
       resolve: async (thread, args, { loaders }) => {
-        return await loaders.user.load(thead.author);
+        return await loaders.user.load(thread.author);
       },
     },
     createdAt: { type: GraphQLString, resolve: thread => thread.createdAt.toString() },

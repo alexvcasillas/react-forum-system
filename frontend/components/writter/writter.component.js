@@ -1,10 +1,13 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import Router from 'next/router';
 
 import Editor from '../editor/editor.component';
 import Preview from '../preview/preview.component';
 
 import PenIcon from '../svg/pen.icon';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const Writter = styled.div`
   display: flex;
@@ -103,35 +106,62 @@ const ThreadTitle = styled.input`
   }
 `;
 
+const CREATE_THREAD_MUTATION = gql`
+  mutation CREATE_THREAD_MUTATION($community: String!, $title: String!, $content: String!) {
+    createThread(community: $community, title: $title, content: $content) {
+      id
+      title
+      content
+      createdAt
+      author {
+        username
+      }
+    }
+  }
+`;
+
 export default props => {
   const previewRef = useRef(null);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
-  function updatePreview(content) {
-    previewRef.current.updatePreview(content);
+  async function publishThread(createThread) {
+    const res = await createThread();
+    console.log(res);
+    Router.push({
+      pathname: `/community`,
+      query: {
+        c: props.in,
+      },
+    });
   }
 
   return (
-    <Writter>
-      <WritterMeta>
-        <Title>
-          New thread on <strong>{props.community}</strong> community
-        </Title>
-        <Actions>
-          <Action>
-            Publish
-            <ActionIcon>
-              <PenIcon fill="#ffffff" />
-            </ActionIcon>
-          </Action>
-        </Actions>
-      </WritterMeta>
-      <Workspace>
-        <EditorArea>
-          <ThreadTitle placeholder="What's up?" />
-          <Editor updatePreview={updatePreview} />
-        </EditorArea>
-        <Preview ref={previewRef} />
-      </Workspace>
-    </Writter>
+    <Mutation mutation={CREATE_THREAD_MUTATION} variables={{ community: props.in, title: title, content: content }}>
+      {(createThread, { error, loading }) => (
+        <Writter>
+          <WritterMeta>
+            <Title>
+              New thread on <strong>{props.community}</strong> community
+            </Title>
+            <Actions onClick={() => publishThread(createThread)}>
+              <Action>
+                Publish
+                <ActionIcon>
+                  <PenIcon fill="#ffffff" />
+                </ActionIcon>
+              </Action>
+            </Actions>
+          </WritterMeta>
+          <Workspace>
+            <EditorArea>
+              <ThreadTitle placeholder="What's up?" value={title} onChange={e => setTitle(e.target.value)} />
+              <Editor initialValue={content} onChange={content => setContent(content)} />
+            </EditorArea>
+            <Preview content={content} />
+          </Workspace>
+        </Writter>
+      )}
+    </Mutation>
   );
 };

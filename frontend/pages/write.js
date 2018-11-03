@@ -17,6 +17,7 @@ const Write = styled.div`
 const COMMUNITY_NAME_QUERY = gql`
   query COMMUNITY_NAME_QUERY($community: String!) {
     community(id: $community) {
+      id
       name
     }
   }
@@ -34,7 +35,7 @@ export default props => (
             <Head>
               <title>RFS | New {community.name} thread</title>
             </Head>
-            <Writter community={community.name} />
+            <Writter in={community.id} community={community.name} />
           </>
         );
       }}
