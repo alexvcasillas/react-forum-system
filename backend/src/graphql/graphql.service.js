@@ -18,6 +18,7 @@ import { UsersQuery } from './queries/users.query';
 import { CommunityQuery } from './queries/community.query';
 import { CommunitiesQuery } from './queries/communities.query';
 import { ThreadsByCommunityQuery } from './queries/threads-by-community.query';
+import { ThreadQuery } from './queries/thread.query';
 // MUTATIONS
 import { AuthenticateMutation } from './mutations/authenticate.mutation';
 import { CreateUser } from './mutations/create-user.mutation';
@@ -45,6 +46,7 @@ const GraphQLService = () => {
       community: CommunityQuery(),
       communities: CommunitiesQuery(),
       threadsByCommunity: ThreadsByCommunityQuery(),
+      thread: ThreadQuery(),
     }),
   });
 

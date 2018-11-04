@@ -8,6 +8,8 @@
   ],
   "scripts": {
     "frontend:dev": "yarn workspace frontend dev",
+    "frontend:build": "yarn workspace frontend build",
+    "frontend:start": "yarn workspace frontend start",
     "backend:dev": "yarn workspace backend start"
   },
   "repository": "https://github.com/alexvcasillas/react-forum-system.git",

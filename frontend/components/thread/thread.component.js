@@ -72,6 +72,7 @@ const ThreadMeta = styled.div`
   span {
     margin-left: 5px;
     margin-right: 5px;
+    color: ${({ theme }) => theme.scheme.gray[5]};
   }
 `;
 
@@ -127,7 +128,7 @@ export default ({ id, title, content, author, createdAt }) => {
     <>
       {active && (
         <Head>
-          <title>RFS | {name}</title>
+          <title>RFS | {title}</title>
         </Head>
       )}
       <Link href={{ pathname: '/community', query: { c: Router.query.c, t: id } }}>
@@ -137,7 +138,7 @@ export default ({ id, title, content, author, createdAt }) => {
             <ThreadTitle>{title}</ThreadTitle>
             <ThreadMeta>
               <ThreadAuthor>{`${author.name} ${author.lastName}`}</ThreadAuthor>
-              <span>&middot;</span>
+              <span>—</span>
               <ThreadWhen>{distanceInWordsStrict(createdAt, Date.now())}</ThreadWhen>
             </ThreadMeta>
             <ThreadStats>
