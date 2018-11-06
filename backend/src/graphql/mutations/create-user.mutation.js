@@ -8,15 +8,22 @@ export const CreateUser = () => ({
     email: { type: GraphQLString },
     password: { type: GraphQLString },
     username: { type: GraphQLString },
+    name: { type: GraphQLString },
+    lastName: { type: GraphQLString },
   },
-  resolve: async (root, args, { db, auth, response }) => {
+  resolve: async (root, args, ctx) => {
+    const { db, auth } = ctx;
     if (
       !args.email ||
       args.email === '' ||
       !args.password ||
       args.password === '' ||
       !args.username ||
-      args.username === ''
+      args.username === '' ||
+      !args.name ||
+      args.name === '' ||
+      !args.lastName ||
+      args.lastName === ''
     ) {
       return MISSING_PARAMETERS;
     }
@@ -37,6 +44,8 @@ export const CreateUser = () => ({
         email: args.email,
         password: args.password,
         username: args.username,
+        name: args.name,
+        lastName: args.lastName,
       });
     } catch (error) {
       return new GraphQLError(
@@ -57,7 +66,7 @@ export const CreateUser = () => ({
         }),
       );
     }
-    rsponse.cookie('token', authToken, {
+    ctx.response.cookie('token', authToken, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
     });

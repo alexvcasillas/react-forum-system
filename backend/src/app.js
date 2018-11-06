@@ -50,39 +50,23 @@ initializeDb(db => {
 
   app.use(
     '/graphql',
-    graphqlHTTP((req, res) => {
-      return {
-        context: {
-          request: req,
-          response: res,
-          loaders: {
-            user: new UserLoader(),
-            community: new CommunityLoader(),
-            thread: new ThreadLoader(),
-            post: new PostLoader(),
-          },
-          headers: req.headers,
-          token: req.cookies.token || null,
-          db: db,
-          auth: auth,
-          security: security,
+    graphqlHTTP((request, response) => ({
+      context: {
+        request: request,
+        response: response,
+        db: db,
+        auth: auth,
+        security: security,
+        loaders: {
+          user: UserLoader(),
+          community: CommunityLoader(),
+          thread: ThreadLoader(),
+          post: PostLoader(),
         },
-        schema: GraphQLService(),
-        graphiql: true,
-        // formatError: err => {
-        //   return err;
-        //   try {
-        //     const error = JSON.parse(err.message);
-        //     return {
-        //       message: error.message,
-        //       status: error.status,
-        //     };
-        //   } catch (error) {
-        //     console.log('Error?: ', error);
-        //   }
-        // },
-      };
-    }),
+      },
+      schema: GraphQLService(),
+      graphiql: true,
+    })),
   );
 
   app.server.listen(process.env.PORT || config.port, () => {

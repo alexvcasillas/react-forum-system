@@ -9,8 +9,9 @@ export const CreateCommunity = () => ({
     description: { type: GraphQLNonNull(GraphQLString) },
     picture: { type: GraphQLNonNull(GraphQLString) },
   },
-  resolve: (root, { name, description, picture }, { headers, loaders, token, security, db, auth }) => {
-    return security.ensureAuthenticated(token).then(async authData => {
+  resolve: (root, { name, description, picture }, ctx) => {
+    const { headers, loaders, security, db } = ctx;
+    return security.ensureAuthenticated(ctx.request.cookies.token).then(async authData => {
       if (!name || name === '' || !description || description === '' || !picture || picture === '') {
         return MISSING_PARAMETERS;
       }

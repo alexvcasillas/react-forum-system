@@ -8,7 +8,8 @@ export const AuthenticateMutation = () => ({
     email: { type: GraphQLNonNull(GraphQLString) },
     password: { type: GraphQLNonNull(GraphQLString) },
   },
-  resolve: async (root, { email, password }, { response, db, auth }) => {
+  resolve: async (root, { email, password }, ctx) => {
+    const { db, auth } = ctx;
     if (email === '' || password === '') return MISSING_PARAMETERS;
     const user = await db.user.findOne({ email });
     if (!user) return NOT_FOUND;
@@ -25,9 +26,9 @@ export const AuthenticateMutation = () => ({
         }),
       );
     }
-    response.cookie('token', authToken, {
+    ctx.response.cookie('token', authToken, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
+      maxAge: 1000 * 60 * 60 * 24 * 365,
     });
     return user.toObject();
   },

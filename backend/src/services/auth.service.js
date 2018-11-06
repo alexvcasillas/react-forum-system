@@ -23,7 +23,6 @@ export const authService = () => ({
   generateToken(payload) {
     return new Promise((resolve, reject) => {
       const token = jwt.sign(payload, process.env.AUTH_SECRET);
-      console.log('Generated token: ', token);
       if (!token) return reject(`An error ocurred while generating the token`);
       return resolve(token);
     });

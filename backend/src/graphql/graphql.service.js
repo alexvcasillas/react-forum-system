@@ -21,6 +21,7 @@ import { ThreadsByCommunityQuery } from './queries/threads-by-community.query';
 import { ThreadQuery } from './queries/thread.query';
 // MUTATIONS
 import { AuthenticateMutation } from './mutations/authenticate.mutation';
+import { LogoutMutation } from './mutations/logout.mutation';
 import { CreateUser } from './mutations/create-user.mutation';
 import { UpdateUser } from './mutations/update-user.mutation';
 import { UpdatePassword } from './mutations/update-password.mutation';
@@ -60,6 +61,7 @@ const GraphQLService = () => {
     fields: () => ({
       /* Creation Mutations  */
       authenticate: AuthenticateMutation(),
+      logout: LogoutMutation(),
       createUser: CreateUser(),
       createCommunity: CreateCommunity(),
       createThread: CreateThread(),

@@ -9,8 +9,9 @@ export const CreateThread = () => ({
     title: { type: GraphQLNonNull(GraphQLString) },
     content: { type: GraphQLNonNull(GraphQLString) },
   },
-  resolve: (root, { community, title, content }, { headers, loaders, token, security, db, auth }) => {
-    return security.ensureAuthenticated(token).then(async authData => {
+  resolve: (root, { community, title, content }, ctx) => {
+    const { headers, loaders, security, db } = ctx;
+    return security.ensureAuthenticated(ctx.request.cookies.token).then(async authData => {
       if (!community || community === '' || !title || title === '' || !content || content === '') {
         return MISSING_PARAMETERS;
       }
