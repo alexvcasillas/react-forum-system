@@ -1,0 +1,114 @@
+import React from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
+import Head from 'next/head';
+
+import { scheme } from '../../lib/theme';
+import { QueryStringConsumer } from '../../lib/query.context';
+
+import ThreadsIcon from '../shared/svg/threads.icon';
+import HeartIcon from '../shared/svg/heart.icon';
+
+const Community = styled.div`
+  padding: 20px;
+  border-bottom: 1px solid ${scheme.gray[4]};
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s ease-in-out;
+  background-color: ${props => (props.active ? scheme.white : scheme.gray[1])};
+
+  &:hover {
+    background-color: ${scheme.white};
+  }
+`;
+
+const CommunityPicture = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: ${scheme.gray[3]};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: url(${props => props.picture});
+  margin-right: 20px;
+`;
+
+const CommunityDetails = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const CommunityName = styled.div`
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: ${scheme.gray[9]};
+  margin-bottom: 5px;
+  font-weight: 600;
+`;
+
+const CommunityDescription = styled.div`
+  color: ${scheme.gray[6]};
+`;
+
+const CommunityStats = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const CommunityStat = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20px;
+  &:first-child {
+    margin-left: 0;
+  }
+`;
+
+const CommunityStatValue = styled.div`
+  margin-left: 5px;
+`;
+
+export default props => {
+  return (
+    <QueryStringConsumer>
+      {queryString => {
+        const activeCommunity = queryString.c === props.community.id;
+        return (
+          <>
+            {activeCommunity && (
+              <Head>
+                <title>RFS | {props.community.name}</title>
+              </Head>
+            )}
+            <Link href={{ path: '/', query: { c: props.community.id } }}>
+              <Community active={activeCommunity}>
+                <CommunityPicture picture={props.community.picture} />
+                <CommunityDetails>
+                  <CommunityName>{props.community.name}</CommunityName>
+                  <CommunityDescription>{props.community.description}</CommunityDescription>
+                  <CommunityStats>
+                    <CommunityStat>
+                      <HeartIcon fill={scheme.red[7]} />
+                      <CommunityStatValue>{props.community.likes}</CommunityStatValue>
+                    </CommunityStat>
+                    <CommunityStat>
+                      <ThreadsIcon fill={scheme.gray[7]} />
+                      <CommunityStatValue>{props.community.threads_count}</CommunityStatValue>
+                    </CommunityStat>
+                  </CommunityStats>
+                </CommunityDetails>
+              </Community>
+            </Link>
+          </>
+        );
+      }}
+    </QueryStringConsumer>
+  );
+};
