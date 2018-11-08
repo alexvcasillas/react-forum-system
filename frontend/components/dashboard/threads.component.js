@@ -79,7 +79,7 @@ export default props => {
         <Query query={COMMUNITY_NAME_QUERY} variables={{ community: props.community }}>
           {({ loading, error, data: { community } }) => {
             if (error) return <div>Error loading community name</div>;
-            if (loading) return <CommunityName>Loading community threads...</CommunityName>;
+            if (loading) return <div>Loading community name</div>;
             return (
               <CommunityName>
                 <span>{community.name}</span> community threads
@@ -89,7 +89,7 @@ export default props => {
         </Query>
       </Header>
       <Auth>
-        {auth => {
+        {({ data: { auth } }) => {
           if (auth) return <NewThread community={props.community} />;
           return null;
         }}
@@ -97,7 +97,7 @@ export default props => {
       <Query query={THREADS_BY_COMMUNITY_QUERY} variables={{ community: props.community }}>
         {({ loading, error, data: { threadsByCommunity } }) => {
           if (error) return <div>Error loading posts</div>;
-          if (loading) return <div>Loading</div>;
+          if (loading) return <div>Loading threads...</div>;
           return threadsByCommunity.map(thread => <Thread key={thread.id} thread={thread} />);
         }}
       </Query>

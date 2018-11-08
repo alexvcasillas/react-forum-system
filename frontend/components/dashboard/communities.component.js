@@ -32,7 +32,7 @@ export default props => {
       <Query query={ALL_COMMUNITIES_QUERY}>
         {({ loading, error, data: { communities } }) => {
           if (error) return <div>Error loading posts</div>;
-          if (loading) return <div>Loading</div>;
+          if (loading) return <div>loading...</div>;
           return communities.map(community => <Community key={community.id} community={community} />);
         }}
       </Query>

@@ -4,8 +4,7 @@ export const AuthQuery = () => ({
   type: UserType,
   resolve: (root, args, ctx) => {
     const { security, loaders } = ctx;
-    console.log('Token: ', ctx.request.cookies.token);
-    return security.ensureAuthenticated(ctx.request.cookies.token).then(
+    return security.ensureAuthenticated(ctx.request.authorization).then(
       async authData => {
         return await loaders.user.load(authData.identifier);
       },

@@ -24,7 +24,6 @@ export const CreateThread = () => ({
           content: content,
         });
       } catch (error) {
-        console.log({ error });
         return GraphQLError(
           Response({
             status: 500,

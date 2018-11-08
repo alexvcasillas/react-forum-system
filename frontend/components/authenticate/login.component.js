@@ -109,7 +109,7 @@ export default class Login extends Component {
         data: { authenticate },
       } = await signin();
       if (authenticate.id) {
-        Router.push('/');
+        window.location.href = '/';
       }
     });
   };

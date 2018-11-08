@@ -8,9 +8,10 @@ import PenIcon from '../shared/svg/pen.icon';
 
 const NewThread = styled.div`
   position: sticky;
-  top: 0;
+  top: 50px;
   left: 0;
   padding: 20px;
+  background-color: ${scheme.gray[1]};
   border-bottom: 1px solid ${scheme.gray[4]};
   display: flex;
   flex-direction: row;

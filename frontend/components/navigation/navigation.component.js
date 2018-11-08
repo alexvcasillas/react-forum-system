@@ -121,40 +121,36 @@ async function handleSignout(signout) {
     data: { logout },
   } = await signout();
   if (logout) {
-    window.location.reload();
-    // Router.push({
-    //   pathname: '/logout',
-    //   query: { ...Router.query },
-    // });
+    window.location.href = '/';
   }
 }
 
 export default () => (
-  <Navigation>
-    <StickyNav>
-      <AppLogo>
-        <img
-          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"
-          alt=""
-          height="60"
-        />
-      </AppLogo>
-      <AppTitle>
-        <span>React</span> FS
-      </AppTitle>
-      <AppSubtitle>Online Communities</AppSubtitle>
-      <NavSection>
-        <NavElement>
-          <Link href="/">
-            <a className="active">
-              Dashboard
-              <span>What's new</span>
-            </a>
-          </Link>
-        </NavElement>
-        <Auth>
-          {auth =>
-            auth && (
+  <Auth>
+    {({ data: { auth } }) => (
+      <Navigation>
+        <StickyNav>
+          <AppLogo>
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"
+              alt=""
+              height="60"
+            />
+          </AppLogo>
+          <AppTitle>
+            <span>React</span> FS
+          </AppTitle>
+          <AppSubtitle>Online Communities</AppSubtitle>
+          <NavSection>
+            <NavElement>
+              <Link href="/">
+                <a className="active">
+                  Dashboard
+                  <span>What's new</span>
+                </a>
+              </Link>
+            </NavElement>
+            {auth && (
               <NavElement>
                 <Link href="/">
                   <a>
@@ -163,21 +159,17 @@ export default () => (
                   </a>
                 </Link>
               </NavElement>
-            )
-          }
-        </Auth>
-        <NavElement>
-          <Link href="/">
-            <a>
-              Explore
-              <span>Discover communities</span>
-            </a>
-          </Link>
-        </NavElement>
-        <NavSectionTitle>Authentication</NavSectionTitle>
-        <Auth>
-          {auth =>
-            !auth ? (
+            )}
+            <NavElement>
+              <Link href="/">
+                <a>
+                  Explore
+                  <span>Discover communities</span>
+                </a>
+              </Link>
+            </NavElement>
+            <NavSectionTitle>Authentication</NavSectionTitle>
+            {!auth ? (
               <>
                 <NavElement>
                   <Link href="/authenticate">
@@ -195,10 +187,10 @@ export default () => (
                   );
                 }}
               </Mutation>
-            )
-          }
-        </Auth>
-      </NavSection>
-    </StickyNav>
-  </Navigation>
+            )}
+          </NavSection>
+        </StickyNav>
+      </Navigation>
+    )}
+  </Auth>
 );

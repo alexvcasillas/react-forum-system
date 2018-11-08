@@ -39,6 +39,12 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// AUTHENTICATION MIDDLEWARE FOR SSR
+app.use((req, res, next) => {
+  req.authorization = req.cookies.token || req.headers.authorization.split(' ')[1];
+  next();
+});
+
 // connect to db
 initializeDb(db => {
   // Auth Service

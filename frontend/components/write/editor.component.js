@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { gql } from 'apollo-boost';
 import { Query, Mutation } from 'react-apollo';
+import Router from 'next/router';
 
 import { QueryStringConsumer } from '../../lib/query.context';
 import { scheme } from '../../lib/theme';
@@ -79,6 +80,9 @@ const CREATE_THREAD_MUTATION = gql`
   mutation CREATE_THREAD_MUTATION($community: String!, $title: String!, $content: String!) {
     createThread(community: $community, title: $title, content: $content) {
       id
+      community {
+        id
+      }
     }
   }
 `;
@@ -87,6 +91,21 @@ export default class Editor extends Component {
   state = { title: '', content: '' };
   setTitle = title => this.setState({ title });
   setContent = content => this.setState({ content });
+
+  handleCreateThread = async createThread => {
+    const {
+      data: { createThread: newThread },
+    } = await createThread();
+    console.log(newThread);
+    Router.push({
+      pathname: '/',
+      query: {
+        c: newThread.community.id,
+        t: newThread.id,
+      },
+    });
+  };
+
   render() {
     const { title, content } = this.state;
     return (
@@ -110,13 +129,13 @@ export default class Editor extends Component {
             {(createThread, { loading, error }) => {
               if (error) return <div>An error ocurred while creating the thread</div>;
               if (loading) {
-                <Publish onClick={createThread} disabled>
+                <Publish onClick={() => this.handleCreateThread(createThread)} disabled>
                   <span>Creating thread</span>
                   <PenIcon fill={scheme.white} />
                 </Publish>;
               }
               return (
-                <Publish onClick={createThread}>
+                <Publish onClick={() => this.handleCreateThread(createThread)}>
                   <span>Publish thread</span>
                   <PenIcon fill={scheme.white} />
                 </Publish>

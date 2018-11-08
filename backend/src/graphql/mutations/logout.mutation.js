@@ -6,7 +6,7 @@ export const LogoutMutation = () => ({
   type: GraphQLBoolean,
   resolve: (root, args, ctx) => {
     const { security } = ctx;
-    return security.ensureAuthenticated(ctx.request.cookies.token).then(async authData => {
+    return security.ensureAuthenticated(ctx.request.authorization).then(async authData => {
       ctx.response.clearCookie('token');
       return true;
     }, security.onRejectedAuthentication);
