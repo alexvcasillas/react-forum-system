@@ -10,6 +10,8 @@ import Thread from './thread-preview.component';
 import NewThread from './new-thread.component';
 import PenIcon from '../shared/svg/pen.icon';
 
+import ThreadPlaceholder from './thread-placeholder.component';
+
 const Threads = styled.div`
   grid-area: threads;
   overflow: scroll;
@@ -97,7 +99,7 @@ export default props => {
       <Query query={THREADS_BY_COMMUNITY_QUERY} variables={{ community: props.community }}>
         {({ loading, error, data: { threadsByCommunity } }) => {
           if (error) return <div>Error loading posts</div>;
-          if (loading) return <div>Loading threads...</div>;
+          if (loading) return <ThreadPlaceholder />;
           return threadsByCommunity.map(thread => <Thread key={thread.id} thread={thread} />);
         }}
       </Query>

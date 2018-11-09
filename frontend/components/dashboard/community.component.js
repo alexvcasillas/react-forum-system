@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Head from 'next/head';

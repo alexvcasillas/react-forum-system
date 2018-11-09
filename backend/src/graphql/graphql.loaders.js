@@ -98,31 +98,31 @@ export const Loaders = ({ db }) => {
     return { load, cache };
   };
 
-  const PostLoader = () => {
-    let memoizedPost = {};
+  const ReplyLoader = () => {
+    let memoizedReply = {};
     /**
      * This method loads and caches the post by the given id
      * @param {string} post identifier
      */
     const load = async id => {
-      if (memoizedPost[id]) return memoizedPost[id];
+      if (memoizedReply[id]) return memoizedReply[id];
       try {
-        memoizedPost[id] = await db.post.findById(id).lean();
+        memoizedReply[id] = await db.reply.findById(id).lean();
       } catch (error) {
-        console.log('Error Loading Post: ', id);
+        console.log('Error Loading Reply: ', id);
       }
-      return memoizedPost[id];
+      return memoizedReply[id];
     };
     /**
-     * This method caches the given posts array
-     * @param {Array} post Array
+     * This method caches the given replies array
+     * @param {Array} reply Array
      * @returns {object} category
      */
-    const cache = posts => {
+    const cache = replies => {
       return new Promise(resolve => {
-        posts.forEach(post => {
-          if (!memoizedPost[post._id]) {
-            memoizedPost[post._id] = post;
+        replies.forEach(reply => {
+          if (!memoizedReply[reply._id]) {
+            memoizedReply[reply._id] = reply;
           }
         });
         resolve();
@@ -135,6 +135,6 @@ export const Loaders = ({ db }) => {
     UserLoader,
     CommunityLoader,
     ThreadLoader,
-    PostLoader,
+    ReplyLoader,
   };
 };

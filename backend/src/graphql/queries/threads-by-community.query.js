@@ -12,7 +12,10 @@ export const ThreadsByCommunityQuery = () => ({
     // return security.ensureAuthenticated(token).then(async authData => {
     let threads;
     try {
-      threads = await db.thread.find({ community, title: { $regex: filter, $options: 'i' } }).lean();
+      threads = await db.thread
+        .find({ community, title: { $regex: filter, $options: 'i' } })
+        .sort({ updatedAt: 'desc' })
+        .lean();
     } catch (error) {
       return new GraphQLError(
         Response({

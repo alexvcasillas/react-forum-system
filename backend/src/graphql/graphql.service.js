@@ -27,6 +27,7 @@ import { UpdateUser } from './mutations/update-user.mutation';
 import { UpdatePassword } from './mutations/update-password.mutation';
 import { CreateCommunity } from './mutations/create-community.mutation';
 import { CreateThread } from './mutations/create-thread.mutation';
+import { CreateReply } from './mutations/create-reply.mutation';
 
 /**
  * GraphQL Service
@@ -65,6 +66,7 @@ const GraphQLService = () => {
       createUser: CreateUser(),
       createCommunity: CreateCommunity(),
       createThread: CreateThread(),
+      createReply: CreateReply(),
       /* Update Mutations */
       updateUser: UpdateUser(),
       updatePassword: UpdatePassword(),

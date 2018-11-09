@@ -23,7 +23,7 @@ export default callback => {
         user: require('./models/user')(mongoose),
         community: require('./models/community')(mongoose),
         thread: require('./models/thread')(mongoose),
-        post: require('./models/post')(mongoose),
+        reply: require('./models/reply')(mongoose),
         community_likes: require('./models/community-likes')(mongoose),
       };
       callback(db);

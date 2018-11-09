@@ -52,7 +52,7 @@ initializeDb(db => {
   // Import the Secutiry Stuff for Queries and Mutations
   const security = Security(db, auth);
 
-  const { UserLoader, CommunityLoader, ThreadLoader, PostLoader } = Loaders({ db });
+  const { UserLoader, CommunityLoader, ThreadLoader, ReplyLoader } = Loaders({ db });
 
   app.use(
     '/graphql',
@@ -67,7 +67,7 @@ initializeDb(db => {
           user: UserLoader(),
           community: CommunityLoader(),
           thread: ThreadLoader(),
-          post: PostLoader(),
+          reply: ReplyLoader(),
         },
       },
       schema: GraphQLService(),

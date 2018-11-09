@@ -1,16 +1,16 @@
 module.exports = mongoose => {
   const Schema = mongoose.Schema;
-  const PostSchema = new Schema({
+  const ReplyScheme = new Schema({
     thread: { type: Schema.Types.ObjectId, required: true },
     author: { type: Schema.Types.ObjectId, required: true },
     content: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now() },
+    createdAt: { type: Date, default: new Date() },
     updatedAt: { type: Date },
   });
-  PostSchema.set('autoIndex', false);
-  PostSchema.pre('save', function(next) {
-    this.updatedAt = Date.now();
+  ReplyScheme.set('autoIndex', false);
+  ReplyScheme.pre('save', function(next) {
+    this.updatedAt = new Date();
     return next();
   });
-  return mongoose.model('post', PostSchema);
+  return mongoose.model('reply', ReplyScheme);
 };

@@ -96,14 +96,20 @@ export default class Editor extends Component {
     const {
       data: { createThread: newThread },
     } = await createThread();
-    console.log(newThread);
-    Router.push({
-      pathname: '/',
-      query: {
-        c: newThread.community.id,
-        t: newThread.id,
-      },
-    });
+
+    /**
+     * This is a monkey patch and should not be used but
+     * it's a temporary solution due to the lack of subscriptions.
+     */
+    window.location.href = `/?c=${newThread.community.id}&t=${newThread.id}`;
+
+    // Router.push({
+    //   pathname: '/',
+    //   query: {
+    //     c: newThread.community.id,
+    //     t: newThread.id,
+    //   },
+    // });
   };
 
   render() {
