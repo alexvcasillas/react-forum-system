@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import format from 'date-fns/format';
+import markdown from 'markdown-it';
+import emoji from 'markdown-it-emoji';
 
 import { scheme } from '../../lib/theme';
 
@@ -71,6 +73,10 @@ const AuthorUsername = styled.div`
 
 const ReplyContent = styled.div`
   color: ${scheme.gray[8]};
+
+  p {
+    margin: 0;
+  }
 `;
 
 const EmDash = styled.div`
@@ -78,6 +84,8 @@ const EmDash = styled.div`
   margin-right: 5px;
   color: ${scheme.gray[6]};
 `;
+
+const md = new markdown({ linkify: true }).use(emoji);
 
 export default props => {
   return (
@@ -92,7 +100,7 @@ export default props => {
             {format(props.reply.createdAt, 'hh:mm:ss A')}
           </ReplyWhen>
         </ReplyAuthor>
-        <ReplyContent>{props.reply.content}</ReplyContent>
+        <ReplyContent dangerouslySetInnerHTML={{ __html: md.render(props.reply.content) }} />
       </ReplyData>
     </Reply>
   );

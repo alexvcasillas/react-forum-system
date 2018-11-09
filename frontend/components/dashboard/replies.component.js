@@ -1,44 +1,45 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import gql from 'apollo-boost';
+import { gql } from 'apollo-boost';
+import { Query } from 'react-apollo';
 
 import { scheme } from '../../lib/theme';
 
-import Reply from './reply.component';
+// import Reply from './reply.component';
+import ReplyList from './reply-list.component';
 
 const Wrapper = styled.section`
   margin-top: 20px;
   border-top: 1px solid ${scheme.gray[4]};
 `;
 
-export default class Replies extends Component {
-  constructor(props) {
-    super(props);
-    if (props.replies && props.replies.length) {
-      this.state = { replies: props.replies };
-    } else {
-      this.state = { replies: [] };
+const REPLIES_BY_THREAD_QUERY = gql`
+  query REPLIES_BY_THREAD_QUERY($thread: String!) {
+    repliesByThread(thread: $thread) {
+      id
+      content
+      createdAt
+      updatedAt
+      author {
+        id
+        username
+        name
+        lastName
+        avatar
+      }
     }
   }
+`;
 
-  addNewReply = reply => {
-    this.setState(prevState => {
-      return {
-        replies: [...prevState.replies, reply],
-      };
-    });
-  };
-
-  render() {
-    const { replies } = this.state;
-    return (
-      <Wrapper>
-        {replies &&
-          replies.length !== 0 &&
-          replies.map(reply => {
-            return <Reply key={reply.id} reply={reply} />;
-          })}
-      </Wrapper>
-    );
-  }
-}
+export default props => (
+  <Wrapper>
+    <Query query={REPLIES_BY_THREAD_QUERY} variables={{ thread: props.thread }} pollInterval={1000}>
+      {({ data: { repliesByThread: replies }, loading, error }) => {
+        if (error) return <div>Error loading replies...</div>;
+        if (loading) return <div>Loading replies</div>;
+        if (replies && replies.length) return <ReplyList scrollDown={props.scrollDown} replies={replies} />;
+        return <div>Ooops... this thread has no replies... Why not start a conversation?!</div>;
+      }}
+    </Query>
+  </Wrapper>
+);

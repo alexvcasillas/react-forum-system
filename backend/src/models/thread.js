@@ -5,12 +5,12 @@ module.exports = mongoose => {
     title: { type: String, required: true },
     author: { type: Schema.Types.ObjectId, required: true },
     content: { type: String, required: true },
-    createdAt: { type: Date, default: new Date() },
-    updatedAt: { type: Date },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
   });
   ThreadSchema.set('autoIndex', false);
   ThreadSchema.pre('save', function(next) {
-    this.updatedAt = new Date();
+    this.updatedAt = Date.now();
     return next();
   });
   return mongoose.model('thread', ThreadSchema);

@@ -5,10 +5,9 @@ import { Query } from 'react-apollo';
 import markdown from 'markdown-it';
 import emoji from 'markdown-it-emoji';
 
-import { QueryStringConsumer } from '../../lib/query.context';
-
 import { scheme } from '../../lib/theme';
 
+import Auth from '../shared/auth/auth.component';
 import Replies from './replies.component';
 import ReplyInputs from './reply-inputs.component';
 
@@ -78,31 +77,17 @@ const THREAD_QUERY = gql`
         lastName
         avatar
       }
-      replies {
-        id
-        content
-        createdAt
-        updatedAt
-        author {
-          username
-          name
-          lastName
-          avatar
-        }
-      }
     }
   }
 `;
 
 const md = new markdown().use(emoji);
 
-export default class Thread extends Component {
-  repliesRef = React.createRef(null);
-
-  addReplyToList = reply => {
-    this.repliesRef.current.addNewReply(reply);
+export default class Thread extends React.PureComponent {
+  scrollableThreadRef = React.createRef(null);
+  scrollDown = () => {
+    this.scrollableThreadRef.current.scrollTop = this.scrollableThreadRef.current.scrollHeight;
   };
-
   render() {
     const { props } = this;
     return (
@@ -123,13 +108,21 @@ export default class Thread extends Component {
                     Thread <span dangerouslySetInnerHTML={{ __html: md.render(thread.title) }} />
                   </ThreadTitle>
                 </Header>
-                <ThreadScrollable>
+                <ThreadScrollable ref={this.scrollableThreadRef}>
                   <Content dangerouslySetInnerHTML={{ __html: md.render(thread.content) }} />
-                  <Replies replies={thread.replies} ref={this.repliesRef} />
+                  <Replies thread={thread.id} replies={thread.replies} scrollDown={this.scrollDown} />
                 </ThreadScrollable>
-                <ReplyArea>
-                  <ReplyInputs author={thread.author} thread={thread.id} addReplyToList={this.addReplyToList} />
-                </ReplyArea>
+                <Auth>
+                  {({ data: { auth } }) => {
+                    if (auth)
+                      return (
+                        <ReplyArea>
+                          <ReplyInputs author={thread.author} thread={thread.id} />
+                        </ReplyArea>
+                      );
+                    return null;
+                  }}
+                </Auth>
               </>
             );
           }}

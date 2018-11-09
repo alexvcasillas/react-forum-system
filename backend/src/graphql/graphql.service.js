@@ -19,6 +19,7 @@ import { CommunityQuery } from './queries/community.query';
 import { CommunitiesQuery } from './queries/communities.query';
 import { ThreadsByCommunityQuery } from './queries/threads-by-community.query';
 import { ThreadQuery } from './queries/thread.query';
+import { RepliesByThreadQuery } from './queries/replies-by-thread.query';
 // MUTATIONS
 import { AuthenticateMutation } from './mutations/authenticate.mutation';
 import { LogoutMutation } from './mutations/logout.mutation';
@@ -49,6 +50,7 @@ const GraphQLService = () => {
       communities: CommunitiesQuery(),
       threadsByCommunity: ThreadsByCommunityQuery(),
       thread: ThreadQuery(),
+      repliesByThread: RepliesByThreadQuery(),
     }),
   });
 

@@ -139,8 +139,6 @@ export default class ReplyInputs extends Component {
     const {
       data: { createReply: reply },
     } = mutationResult;
-    const { addReplyToList } = this.props;
-    addReplyToList(reply);
     this.setState({ content: '' });
   };
 

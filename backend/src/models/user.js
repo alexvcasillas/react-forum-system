@@ -11,15 +11,15 @@ module.exports = mongoose => {
     username: { type: String, unique: true, required: true },
     avatar: { type: String },
     role: { type: String, enum: ['ADMIN', 'USER'], default: 'USER' },
-    createdAt: { type: Date, default: new Date() },
-    updatedAt: { type: Date },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
     token: { type: String },
     accountDisabled: { type: Boolean, default: false },
   });
   UserSchema.set('autoIndex', false);
   UserSchema.pre('save', function(next) {
     const user = this;
-    user.updatedAt = new Date();
+    user.updatedAt = Date.now();
     if (!user.isModified('password')) return next();
     bcrypt.genSalt(SALT_WORK_FACTOR, function(error, salt) {
       if (error) return next(error);

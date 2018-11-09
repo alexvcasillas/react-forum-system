@@ -121,7 +121,7 @@ async function handleSignout(signout) {
     data: { logout },
   } = await signout();
   if (logout) {
-    window.location.href = '/';
+    window.location.reload();
   }
 }
 
