@@ -88,6 +88,9 @@ export default class Thread extends React.PureComponent {
   scrollDown = () => {
     this.scrollableThreadRef.current.scrollTop = this.scrollableThreadRef.current.scrollHeight;
   };
+  scrollTop = () => {
+    this.scrollableThreadRef.current.scrollTop = 0;
+  };
   render() {
     const { props } = this;
     return (
@@ -110,7 +113,12 @@ export default class Thread extends React.PureComponent {
                 </Header>
                 <ThreadScrollable ref={this.scrollableThreadRef}>
                   <Content dangerouslySetInnerHTML={{ __html: md.render(thread.content) }} />
-                  <Replies thread={thread.id} replies={thread.replies} scrollDown={this.scrollDown} />
+                  <Replies
+                    thread={thread.id}
+                    replies={thread.replies}
+                    scrollDown={this.scrollDown}
+                    scrollTop={this.scrollTop}
+                  />
                 </ThreadScrollable>
                 <Auth>
                   {({ data: { auth } }) => {
