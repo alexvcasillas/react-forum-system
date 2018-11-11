@@ -10,7 +10,11 @@
     "frontend:dev": "yarn workspace frontend dev",
     "frontend:build": "yarn workspace frontend build",
     "frontend:start": "yarn workspace frontend start",
-    "backend:dev": "yarn workspace backend start"
+    "frontend:deploy": "yarn workspace frontend deploy",
+    "backend:dev": "yarn workspace backend dev",
+    "backend:build": "yarn workspace backend build",
+    "backend:start": "yarn workspace backend start",
+    "backend:deploy": "yarn workspace backend deploy"
   },
   "repository": "https://github.com/alexvcasillas/react-forum-system.git",
   "author": "Alex Casillas <alexvcasillas@gmail.com>",

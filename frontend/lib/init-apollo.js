@@ -4,6 +4,11 @@ import fetch from 'isomorphic-unfetch';
 
 let apolloClient = null;
 
+const isBrowser = process.browser;
+const isDev = process.env.ENV !== 'production';
+
+const devEndpoint = 'http://localhost:8080/graphql';
+
 // Polyfill fetch() on the server (used by apollo-client)
 if (!process.browser) {
   global.fetch = fetch;
@@ -11,7 +16,7 @@ if (!process.browser) {
 
 function create(initialState, { getToken }) {
   const httpLink = new HttpLink({
-    uri: 'http://localhost:8080/graphql',
+    uri: isDev ? devEndpoint : process.env.API_URL,
     credentials: 'include',
   });
 

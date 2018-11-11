@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import chalk from 'chalk';
 import initializeDb from './db';
-import config from './config.json';
+import { config } from './config';
 import { authService } from './services/auth.service';
 import graphqlHTTP from 'express-graphql';
 require('dotenv').config();
@@ -15,6 +15,8 @@ import { GraphQLService } from './graphql/graphql.service';
 import { Loaders } from './graphql/graphql.loaders';
 // SECURITY
 import { Security } from './graphql/security/security';
+
+const isDev = process.env.ENV === 'development';
 
 let app = express();
 app.server = http.createServer(app);
@@ -27,7 +29,7 @@ app.use(
   cors({
     exposedHeaders: config.corsHeaders,
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: isDev ? 'http://localhost:3000' : process.env.APP_URL,
   }),
 );
 
@@ -41,7 +43,7 @@ app.use(cookieParser());
 
 // AUTHENTICATION MIDDLEWARE FOR SSR
 app.use((req, res, next) => {
-  req.authorization = req.cookies.token || req.headers.authorization.split(' ')[1];
+  req.authorization = req.cookies.token || (req.headers.authorization ? req.headers.authorization.split(' ')[1] : null);
   next();
 });
 
@@ -75,7 +77,7 @@ initializeDb(db => {
     })),
   );
 
-  app.server.listen(process.env.PORT || config.port, () => {
+  app.server.listen('*', () => {
     console.log(
       `[ ${chalk.blue('React Forum System Backend')} ] Worker process ${chalk.green(
         process.pid,

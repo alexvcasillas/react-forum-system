@@ -9,7 +9,7 @@ const uri = `mongodb://${dbUser}:${dbPswd}@ds237748.mlab.com:37748/${dbName}`;
 export default callback => {
   mongoose
     .connect(
-      uri,
+      process.env.ENV === 'development' ? uri : process.env.MONGODB,
       {
         autoIndex: false,
         useNewUrlParser: true,

@@ -2,13 +2,9 @@
 
 module.exports = function (mongoose) {
   var Schema = mongoose.Schema;
-  var ThreadSchema = new Schema({
-    community: {
+  var ReplyScheme = new Schema({
+    thread: {
       type: Schema.Types.ObjectId,
-      required: true
-    },
-    title: {
-      type: String,
       required: true
     },
     author: {
@@ -28,10 +24,10 @@ module.exports = function (mongoose) {
       default: Date.now
     }
   });
-  ThreadSchema.set('autoIndex', false);
-  ThreadSchema.pre('save', function (next) {
+  ReplyScheme.set('autoIndex', false);
+  ReplyScheme.pre('save', function (next) {
     this.updatedAt = Date.now();
     return next();
   });
-  return mongoose.model('thread', ThreadSchema);
+  return mongoose.model('reply', ReplyScheme);
 };

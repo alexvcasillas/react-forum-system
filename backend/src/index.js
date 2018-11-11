@@ -4,7 +4,11 @@ const cluster = require('cluster');
 const chalk = require('chalk');
 require('dotenv').config();
 
-if (process.env.ENV === 'development') {
+const app = require('./app');
+
+const isDev = process.env.ENV === 'development';
+
+if (isDev) {
   const app = require('./app');
 } else {
   // Check for Master
@@ -15,7 +19,7 @@ if (process.env.ENV === 'development') {
     }
     // Online Listener for Cluster
     cluster.on('online', function(worker) {
-      if (process.env.ENV === 'development') {
+      if (isDev) {
         console.log(`[ ${chalk.green.bold('LOGLY WORKER ONLINE')} ]`);
         console.log(`Worker PID: ${chalk.yellow(worker.process.pid)}`);
         console.log(chalk.gray('----'));
@@ -23,7 +27,7 @@ if (process.env.ENV === 'development') {
     });
     // Exit Listener for Cluster
     cluster.on('exit', function(worker, code, signal) {
-      if (process.env.ENV === 'development') {
+      if (isDev) {
         console.log(`[ ${chalk.red.bold('LOGLY WORKER DIED')} ]`);
         console.log(chalk.gray('----'));
         console.log(`Worker PID: ${chalk.yellow(worker.process.pid)}`);
