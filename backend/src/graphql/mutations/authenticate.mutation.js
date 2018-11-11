@@ -1,6 +1,7 @@
 import { GraphQLNonNull, GraphQLString, GraphQLError } from 'graphql';
 import { UserType } from '../types/user.type';
 import { Response, NOT_FOUND, MISSING_PARAMETERS } from '../utils/responses.utils';
+import { config } from '../../config';
 
 export const AuthenticateMutation = () => ({
   type: UserType,
@@ -28,6 +29,7 @@ export const AuthenticateMutation = () => ({
     }
     ctx.response.cookie('token', authToken, {
       httpOnly: true,
+      domain: config.cookieDomain,
       maxAge: 1000 * 60 * 60 * 24 * 365,
     });
     return user.toObject();

@@ -3,4 +3,5 @@ export const config = {
   bodyLimit: '100kb',
   corsHeaders: ['Link'],
   frontendApp: 'http://rfs.reactiveacademy.com',
+  cookieDomain: '.reactiveacademy.com',
 };
