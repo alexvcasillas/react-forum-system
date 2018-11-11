@@ -7,7 +7,11 @@ export const LogoutMutation = () => ({
   resolve: (root, args, ctx) => {
     const { security } = ctx;
     return security.ensureAuthenticated(ctx.request.authorization).then(async authData => {
-      ctx.response.clearCookie('token');
+      ctx.response.clearCookie('token', {
+        httpOnly: true,
+        domain: config.cookieDomain,
+        maxAge: 1000 * 60 * 60 * 24 * 365,
+      });
       return true;
     }, security.onRejectedAuthentication);
   },
