@@ -11,7 +11,7 @@
     "start": "node dist/app.js",
     "dev": "nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir dist",
-    "heroku-postbuild": "yarn build"
+    "heroku-postbuild": "build"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
