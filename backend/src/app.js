@@ -1,3 +1,4 @@
+require('@babel/polyfill');
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
@@ -77,13 +78,11 @@ initializeDb(db => {
     })),
   );
 
-  app.server.listen('*', () => {
+  app.server.listen(process.env.PORT || config.port, () => {
     console.log(
       `[ ${chalk.blue('React Forum System Backend')} ] Worker process ${chalk.green(
         process.pid,
-      )} started on port ${chalk.green(app.server.address().port)}`,
+      )} started on port ${chalk.green(process.env.PORT || config.port)}`,
     );
   });
 });
-
-export default app;
