@@ -4,8 +4,6 @@ const cluster = require('cluster');
 const chalk = require('chalk');
 require('dotenv').config();
 
-const app = require('./app');
-
 const isDev = process.env.ENV === 'development';
 
 if (isDev) {

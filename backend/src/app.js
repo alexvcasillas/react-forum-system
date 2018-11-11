@@ -29,7 +29,7 @@ app.use(
   cors({
     exposedHeaders: config.corsHeaders,
     credentials: true,
-    origin: isDev ? 'http://localhost:3000' : process.env.APP_URL,
+    origin: isDev ? 'http://localhost:3000' : config.frontendApp,
   }),
 );
 

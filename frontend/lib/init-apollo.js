@@ -8,6 +8,7 @@ const isBrowser = process.browser;
 const isDev = process.env.ENV !== 'production';
 
 const devEndpoint = 'http://localhost:8080/graphql';
+const prodEndpoint = 'https://rfs-backend.herokuapp.com';
 
 // Polyfill fetch() on the server (used by apollo-client)
 if (!process.browser) {
@@ -16,7 +17,7 @@ if (!process.browser) {
 
 function create(initialState, { getToken }) {
   const httpLink = new HttpLink({
-    uri: isDev ? devEndpoint : process.env.API_URL,
+    uri: isDev ? devEndpoint : prodEndpoint,
     credentials: 'include',
   });
 
