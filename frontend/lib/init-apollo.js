@@ -7,7 +7,7 @@ let apolloClient = null;
 const isBrowser = process.browser;
 
 const devEndpoint = 'http://localhost:8080/graphql';
-const prodEndpoint = 'https://rfs-backend.herokuapp.com';
+const prodEndpoint = 'https://rfs-backend.herokuapp.com/graphql';
 
 // Polyfill fetch() on the server (used by apollo-client)
 if (!process.browser) {
