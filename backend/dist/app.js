@@ -94,7 +94,7 @@ app.use(function (req, res, next) {
       graphiql: true
     };
   }));
-  app.server.listen('*', function () {
+  app.server.listen(process.env.PORT || _config.config.port, function () {
     console.log("[ ".concat(_chalk.default.blue('React Forum System Backend'), " ] Worker process ").concat(_chalk.default.green(process.pid), " started on port ").concat(_chalk.default.green(app.server.address().port)));
   });
 });

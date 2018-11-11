@@ -1,4 +1,4 @@
-// require('babel-polyfill');
+require('@babel/polyfill');
 const cpus = require('os').cpus;
 const cluster = require('cluster');
 const chalk = require('chalk');
