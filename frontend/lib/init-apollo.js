@@ -5,6 +5,7 @@ import fetch from 'isomorphic-unfetch';
 let apolloClient = null;
 
 const isBrowser = process.browser;
+const isProduction = true;
 
 const devEndpoint = 'http://localhost:8080/graphql';
 const prodEndpoint = 'https://rfs-backend.herokuapp.com/graphql';
@@ -16,7 +17,7 @@ if (!process.browser) {
 
 function create(initialState, { getToken }) {
   const httpLink = new HttpLink({
-    uri: process.env.ENV === 'production' ? prodEndpoint : devEndpoint,
+    uri: isProduction ? prodEndpoint : devEndpoint,
     credentials: 'include',
   });
 
