@@ -15,10 +15,8 @@ if (!process.browser) {
 }
 
 function create(initialState, { getToken }) {
-  const isProd = process.env.ENV === 'production';
-
   const httpLink = new HttpLink({
-    uri: isProd ? prodEndpoint : devEndpoint,
+    uri: process.env.ENV === 'production' ? prodEndpoint : devEndpoint,
     credentials: 'include',
   });
 
