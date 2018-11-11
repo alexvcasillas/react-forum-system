@@ -5,10 +5,10 @@ import fetch from 'isomorphic-unfetch';
 let apolloClient = null;
 
 const isBrowser = process.browser;
-const isProduction = true;
+const isProduction = process.env.ENV;
 
 const devEndpoint = 'http://localhost:8080/graphql';
-const prodEndpoint = 'https://rfs-backend.herokuapp.com/graphql';
+const prodEndpoint = 'http://rfs-api.reactiveacademy.com/graphql';
 
 // Polyfill fetch() on the server (used by apollo-client)
 if (!process.browser) {
