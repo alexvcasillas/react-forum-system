@@ -1,6 +1,7 @@
 import { GraphQLBoolean } from 'graphql';
 import { UserType } from '../types/user.type';
 import { Response, NOT_FOUND, MISSING_PARAMETERS } from '../utils/responses.utils';
+import { config } from '../../config';
 
 export const LogoutMutation = () => ({
   type: GraphQLBoolean,
