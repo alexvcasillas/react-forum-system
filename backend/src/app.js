@@ -77,7 +77,7 @@ initializeDb(db => {
     })),
   );
 
-  app.server.listen(process.env.PORT || config.port, () => {
+  app.server.listen('*', () => {
     console.log(
       `[ ${chalk.blue('React Forum System Backend')} ] Worker process ${chalk.green(
         process.pid,
