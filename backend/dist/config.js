@@ -7,6 +7,7 @@ exports.config = void 0;
 var config = {
   port: 8080,
   bodyLimit: '100kb',
-  corsHeaders: ['Link']
+  corsHeaders: ['Link'],
+  frontendApp: 'rfs-frontend.herokuapp.com'
 };
 exports.config = config;

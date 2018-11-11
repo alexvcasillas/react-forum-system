@@ -1,10 +1,5 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
 var _http = _interopRequireDefault(require("http"));
 
 var _express = _interopRequireDefault(require("express"));
@@ -35,6 +30,8 @@ var _security = require("./graphql/security/security");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+require('@babel/polyfill');
+
 require('dotenv').config();
 
 var isDev = process.env.ENV === 'development';
@@ -46,7 +43,7 @@ app.use((0, _morgan.default)('dev')); // 3rd party middleware
 app.use((0, _cors.default)({
   exposedHeaders: _config.config.corsHeaders,
   credentials: true,
-  origin: isDev ? 'http://localhost:3000' : process.env.APP_URL
+  origin: isDev ? 'http://localhost:3000' : _config.config.frontendApp
 }));
 app.use(_bodyParser.default.json({
   limit: _config.config.bodyLimit
@@ -95,8 +92,6 @@ app.use(function (req, res, next) {
     };
   }));
   app.server.listen(process.env.PORT || _config.config.port, function () {
-    console.log("[ ".concat(_chalk.default.blue('React Forum System Backend'), " ] Worker process ").concat(_chalk.default.green(process.pid), " started on port ").concat(_chalk.default.green(app.server.address().port)));
+    console.log("[ ".concat(_chalk.default.blue('React Forum System Backend'), " ] Worker process ").concat(_chalk.default.green(process.pid), " started on port ").concat(_chalk.default.green(process.env.PORT || _config.config.port)));
   });
 });
-var _default = app;
-exports.default = _default;
