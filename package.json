@@ -10,11 +10,13 @@
     "frontend:dev": "yarn workspace frontend dev",
     "frontend:build": "yarn workspace frontend build",
     "frontend:start": "yarn workspace frontend start",
-    "frontend:deploy": "yarn workspace frontend deploy",
+    "frontend:deploy": "git subtree push --prefix frontend heroku-frontend master",
+    "frontend:logs": "heroku logs --tail --app rfs-frontend",
     "backend:dev": "yarn workspace backend dev",
     "backend:build": "yarn workspace backend build",
     "backend:start": "yarn workspace backend start",
-    "backend:deploy": "yarn workspace backend deploy"
+    "backend:deploy": "git subtree push --prefix backend heroku-backend master",
+    "backend:logs": "heroku logs --tail --app rfs-backend"
   },
   "repository": "https://github.com/alexvcasillas/react-forum-system.git",
   "author": "Alex Casillas <alexvcasillas@gmail.com>",

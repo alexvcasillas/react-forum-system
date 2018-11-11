@@ -5,7 +5,7 @@ import fetch from 'isomorphic-unfetch';
 let apolloClient = null;
 
 const isBrowser = process.browser;
-const isProduction = process.env.ENV;
+const isProduction = process.env ? process.env.ENV : false;
 
 const devEndpoint = 'http://localhost:8080/graphql';
 const prodEndpoint = 'http://rfs-api.reactiveacademy.com/graphql';
