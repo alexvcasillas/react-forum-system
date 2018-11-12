@@ -5,7 +5,6 @@ import fetch from 'isomorphic-unfetch';
 let apolloClient = null;
 
 const isBrowser = process.browser;
-const isProduction = true;
 
 const devEndpoint = 'http://localhost:8080/graphql';
 const prodEndpoint = 'http://rfs-api.reactiveacademy.com/graphql';
@@ -17,7 +16,7 @@ if (!process.browser) {
 
 function create(initialState, { getToken }) {
   const httpLink = new HttpLink({
-    uri: isProduction ? prodEndpoint : devEndpoint,
+    uri: __DEV__ ? devEndpoint : prodEndpoint,
     credentials: 'include',
   });
 

@@ -28,6 +28,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-styled-components": "^1.8.0"
   }
 }
