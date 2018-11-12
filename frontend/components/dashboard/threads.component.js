@@ -27,7 +27,8 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 0 20px;
-  box-shadow: 0px 5px 5px 0 rgba(0, 0, 0, 0.08);
+  /* box-shadow: 0px 5px 5px 0 rgba(0, 0, 0, 0.08); */
+  border-bottom: 1px solid ${scheme.gray[4]};
   z-index: 10;
 `;
 

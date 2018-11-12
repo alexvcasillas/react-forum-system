@@ -10,7 +10,6 @@ import HappyFaceIcon from '../shared/svg/happy-face.icon';
 import SadFaceIcon from '../shared/svg/sad-face.icon';
 
 const Wrapper = styled.section`
-  margin-top: 20px;
   border-top: 1px solid ${scheme.gray[4]};
 `;
 

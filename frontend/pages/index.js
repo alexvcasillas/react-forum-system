@@ -15,8 +15,9 @@ const Dashboard = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-areas: 'navigation communities threads thread';
-  grid-template-columns: 250px 350px 450px auto;
+  grid-template-areas: 'navigation navigation navigation' 'communities threads thread';
+  grid-template-rows: 60px auto;
+  grid-template-columns: 350px 450px auto;
 `;
 
 export default props => {

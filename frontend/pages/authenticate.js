@@ -12,8 +12,9 @@ const Authenticate = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-areas: 'navigation authentication';
-  grid-template-columns: 250px auto;
+  grid-template-areas: 'navigation' 'authentication';
+  grid-template-rows: 60px auto;
+  grid-template-columns: auto;
 `;
 
 export default props => {
