@@ -5,7 +5,9 @@ import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
 import { scheme } from '../../lib/theme';
+
 import PaperPlaneIcon from '../shared/svg/paper-plane.icon';
+import Auth from '../shared/auth/auth.component';
 
 const Wrapper = styled.div`
   display: flex;
@@ -150,7 +152,7 @@ export default class ReplyInputs extends Component {
         {(createReply, { error, loading, data }) => (
           <Wrapper>
             <Row>
-              <AuthorPicture picture={author.avatar} />
+              <Auth>{({ data: { auth } }) => <AuthorPicture picture={auth.avatar} />}</Auth>
               <Input
                 value={content}
                 maxRows={10}
