@@ -37,6 +37,8 @@ const WritePaper = styled(Textarea)`
   background-color: ${scheme.gray[1]};
   color: ${scheme.gray[8]};
   padding: 0 40px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
 
   &::placeholder {
     color: ${scheme.gray[5]};

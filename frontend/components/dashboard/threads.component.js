@@ -14,7 +14,7 @@ import ThreadPlaceholder from './thread-placeholder.component';
 
 const Threads = styled.div`
   grid-area: threads;
-  overflow: scroll;
+  overflow-y: scroll;
   border-right: 1px solid ${scheme.gray[4]};
 `;
 

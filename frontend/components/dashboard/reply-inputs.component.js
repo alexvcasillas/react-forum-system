@@ -65,6 +65,8 @@ const Input = styled(Textarea)`
   font-size: 1.4rem;
   color: ${scheme.gray[8]};
   resize: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    sans-serif;
 
   &::placeholder {
     color: ${scheme.gray[6]};

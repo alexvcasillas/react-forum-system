@@ -50,7 +50,7 @@ const ThreadTitle = styled.div`
 
 const ThreadScrollable = styled.div`
   flex: 1;
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 const Content = styled.div`
