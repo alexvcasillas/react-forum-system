@@ -7,7 +7,7 @@ let apolloClient = null;
 const isBrowser = process.browser;
 
 const devEndpoint = 'http://localhost:8080/graphql';
-const prodEndpoint = 'http://rfs-api.reactiveacademy.com/graphql';
+const prodEndpoint = 'http://api.reactivecommunity.com/graphql';
 
 // Polyfill fetch() on the server (used by apollo-client)
 if (!process.browser) {

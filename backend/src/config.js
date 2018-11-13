@@ -4,6 +4,6 @@ export const config = {
   port: 8080,
   bodyLimit: '100kb',
   corsHeaders: ['Link'],
-  frontendApp: 'http://rfs.reactiveacademy.com',
-  cookieDomain: isDev ? 'localhost' : '.reactiveacademy.com',
+  frontendApp: 'http://reactivecommunity.com',
+  cookieDomain: isDev ? 'localhost' : '.reactivecommunity.com',
 };
