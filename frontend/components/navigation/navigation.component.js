@@ -159,7 +159,7 @@ export default () => (
           </AppLogo>
           <AppInfo>
             <AppTitle>
-              <span>React</span> FS
+              <span>Reactive</span> Community
             </AppTitle>
             <AppSubtitle>Online Communities</AppSubtitle>
           </AppInfo>
