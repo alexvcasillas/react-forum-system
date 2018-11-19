@@ -11,6 +11,7 @@ import NewThread from './new-thread.component';
 import PenIcon from '../shared/svg/pen.icon';
 
 import ThreadPlaceholder from './thread-placeholder.component';
+import ThreadList from './thread-list.component';
 
 const Threads = styled.div`
   grid-area: threads;
@@ -54,6 +55,8 @@ const THREADS_BY_COMMUNITY_QUERY = gql`
       title
       content
       createdAt
+      replies_count
+      users_replying
       community {
         id
       }
@@ -98,10 +101,10 @@ export default props => {
         }}
       </Auth>
       <Query query={THREADS_BY_COMMUNITY_QUERY} variables={{ community: props.community }}>
-        {({ loading, error, data: { threadsByCommunity } }) => {
+        {({ loading, error, data: { threadsByCommunity: threads } }) => {
           if (error) return <div>Error loading posts</div>;
           if (loading) return <ThreadPlaceholder />;
-          return threadsByCommunity.map(thread => <Thread key={thread.id} thread={thread} />);
+          return <ThreadList threads={threads} />;
         }}
       </Query>
     </Threads>

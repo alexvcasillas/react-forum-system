@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { scheme } from '../../lib/theme';
+import { graphQLErrorHandler } from '../../lib/graphql.utils';
+
+const errorFieldAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div`
   width: 400px;
@@ -69,6 +79,14 @@ const Button = styled.button`
   }
 `;
 
+const ErrorField = styled.div`
+  padding: 10px;
+  border-radius: 5px;
+  background-color: ${scheme.red[2]};
+  color: ${scheme.gray[8]};
+  animation: ${errorFieldAnimation} 0.5s linear;
+`;
+
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
     $email: String!
@@ -101,6 +119,7 @@ export default class Register extends Component {
     password: '',
     name: '',
     lastName: '',
+    error: null,
   };
 
   handleEmail = email => this.setState({ email });
@@ -109,15 +128,34 @@ export default class Register extends Component {
   handleName = name => this.setState({ name });
   handleLastName = lastName => this.setState({ lastName });
 
-  handleSignup = async signup => {
-    await signup();
+  handleSignup = signup => {
+    const { email, username, password, name, lastName } = this.state;
+    if (email === '' || username === '' || password === '' || name === '' || lastName === '') {
+      return this.setState({ error: `Fields must not be empty` });
+    }
+    this.setState({ error: null }, async () => {
+      let mutationResult;
+      try {
+        mutationResult = await signup();
+      } catch (mutationError) {
+        const error = graphQLErrorHandler(mutationError);
+        console.warn({ error });
+        return this.setState({ error: error.message });
+      }
+      const {
+        data: { createUser: user },
+      } = mutationResult;
+      if (user.id) {
+        window.location.href = '/';
+      }
+    });
   };
 
   render() {
-    const { email, username, password, name, lastName } = this.state;
+    const { email, username, password, name, lastName, error } = this.state;
     return (
       <Mutation mutation={SIGNUP_MUTATION} variables={{ email, username, password, name, lastName }}>
-        {(signup, { error, loading }) => {
+        {(signup, { error: mutationError, loading }) => {
           return (
             <Wrapper>
               <FormTitle>Register</FormTitle>
@@ -162,8 +200,13 @@ export default class Register extends Component {
                   onChange={e => this.handleLastName(e.target.value)}
                 />
               </FormRow>
+              {error && (
+                <FormRow>
+                  <ErrorField>{error}</ErrorField>
+                </FormRow>
+              )}
               <FormRow>
-                <Button onClick={signup}>Create Account</Button>
+                <Button onClick={() => this.handleSignup(signup)}>Create Account</Button>
               </FormRow>
             </Wrapper>
           );

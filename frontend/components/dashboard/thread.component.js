@@ -92,7 +92,9 @@ const AuthorName = styled.div`
   align-items: center;
 `;
 const AuthorHandle = styled.div`
+  margin-left: 5px;
   color: ${scheme.gray[6]};
+  font-weight: 400;
 `;
 
 const ThreadDate = styled.div`

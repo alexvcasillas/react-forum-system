@@ -18,6 +18,7 @@ const NewThread = styled.div`
   cursor: pointer;
   user-select: none;
   transition: background 0.3s ease-in-out;
+  z-index: 10;
 
   &:hover {
     background-color: ${scheme.white};

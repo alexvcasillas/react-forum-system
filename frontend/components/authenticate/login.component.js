@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Router from 'next/router';
 
 import { scheme } from '../../lib/theme';
+import { graphQLErrorHandler } from '../../lib/graphql.utils';
+
+const errorFieldAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div`
   width: 400px;
@@ -59,6 +69,7 @@ const ErrorField = styled.div`
   border-radius: 5px;
   background-color: ${scheme.red[2]};
   color: ${scheme.gray[8]};
+  animation: ${errorFieldAnimation} 0.5s linear;
 `;
 
 const Button = styled.button`
@@ -118,7 +129,7 @@ export default class Login extends Component {
     const { email, password, error } = this.state;
     return (
       <Mutation mutation={SIGNIN_MUTATION} variables={{ email, password }}>
-        {(signin, { error, loading, data }) => {
+        {(signin, { error: mutationError, loading, data }) => {
           return (
             <Wrapper>
               <FormTitle>Login</FormTitle>
