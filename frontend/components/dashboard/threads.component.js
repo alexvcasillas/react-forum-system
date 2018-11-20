@@ -48,7 +48,7 @@ const CommunityName = styled.div`
   }
 `;
 
-const THREADS_BY_COMMUNITY_QUERY = gql`
+export const THREADS_BY_COMMUNITY_QUERY = gql`
   query THREADS_BY_COMMUNITY_QUERY($community: String!) {
     threadsByCommunity(community: $community) {
       id

@@ -181,7 +181,7 @@ export default class Thread extends React.PureComponent {
                     if (auth)
                       return (
                         <ReplyArea>
-                          <ReplyInputs thread={thread.id} />
+                          <ReplyInputs thread={thread.id} community={thread.community.id} />
                         </ReplyArea>
                       );
                     return null;

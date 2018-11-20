@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
 import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
+import Router from 'next/router';
 
 import { scheme } from '../../lib/theme';
 
 import PaperPlaneIcon from '../shared/svg/paper-plane.icon';
 import Auth from '../shared/auth/auth.component';
+
+import { THREADS_BY_COMMUNITY_QUERY } from './threads.component';
 
 const Wrapper = styled.div`
   display: flex;
@@ -148,9 +151,13 @@ export default class ReplyInputs extends Component {
 
   render() {
     const { content } = this.state;
-    const { author, thread } = this.props;
+    const { author, thread, community } = this.props;
     return (
-      <Mutation mutation={CREATE_REPLY_MUTATION} variables={{ content, thread: thread }}>
+      <Mutation
+        mutation={CREATE_REPLY_MUTATION}
+        variables={{ content, thread: thread }}
+        refetchQueries={[{ query: THREADS_BY_COMMUNITY_QUERY, variables: { community: community } }]}
+      >
         {(createReply, { error, loading, data }) => (
           <Wrapper>
             <Row>
