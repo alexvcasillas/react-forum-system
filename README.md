@@ -2,6 +2,8 @@
 
 React Forum System (RFS) aims to provide a simple, yet effective forum system with the latest cutting-edge techonologies out there in the market.
 
+Check this project life at [http://reactivecommunity.com](http://reactivecommunity.com) and join the community now!
+
 ### What techonologies does RFS uses?
 
 RFS uses the following technologies to provide the best development experience plus the best performance possible for the users:
