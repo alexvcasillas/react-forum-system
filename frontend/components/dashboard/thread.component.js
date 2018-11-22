@@ -109,7 +109,7 @@ const ReplyArea = styled.div`
 
 const THREAD_QUERY = gql`
   query THREAD_QUERY($thread: String!) {
-    thread(id: $thread) {
+    thread(slug: $thread) {
       id
       title
       content

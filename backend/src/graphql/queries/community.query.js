@@ -4,11 +4,13 @@ import { CommunityType } from '../types/community.type';
 export const CommunityQuery = () => ({
   type: CommunityType,
   args: {
-    id: { type: GraphQLNonNull(GraphQLString) },
+    id: { type: GraphQLString },
+    slug: { type: GraphQLString },
   },
-  resolve: async (root, { id }, { headers, loaders, token, security, db }) => {
+  resolve: async (root, { id, slug }, { headers, loaders, token, security, db }) => {
     // return security.ensureAuthenticated(token).then(async authData => {
-    return await loaders.community.load(id);
+    if (id) return await loaders.community.load(id);
+    if (slug) return await db.community.findOne({ slug }).lean();
     // }, security.onRejectedAuthentication);
   },
 });
