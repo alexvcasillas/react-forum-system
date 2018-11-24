@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
 import Head from 'next/head';
+import { Link } from '../../routes';
 
 import { scheme } from '../../lib/theme';
 import { QueryStringConsumer } from '../../lib/query.context';
@@ -140,7 +140,7 @@ export default props => {
   return (
     <QueryStringConsumer>
       {queryString => {
-        const activeCommunity = queryString.c === props.community.id;
+        const activeCommunity = queryString.c === props.community.slug;
         return (
           <>
             {activeCommunity && (
@@ -148,7 +148,7 @@ export default props => {
                 <title>RFS | {props.community.name}</title>
               </Head>
             )}
-            <Link href={{ path: '/', query: { c: props.community.id } }}>
+            <Link route="dashboard" params={{ c: props.community.slug }}>
               <Community active={activeCommunity}>
                 <CommunityPicture picture={props.community.picture} />
                 <CommunityDetails>

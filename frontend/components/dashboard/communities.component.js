@@ -19,6 +19,7 @@ export const ALL_COMMUNITIES_QUERY = gql`
       id
       name
       description
+      slug
       picture
       likes
       threads_count

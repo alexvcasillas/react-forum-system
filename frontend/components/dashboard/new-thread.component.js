@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
+import { Link } from '../../routes';
 
 import { scheme } from '../../lib/theme';
 
@@ -61,7 +61,7 @@ const NewThreadInfo = styled.div`
 
 export default props => {
   return (
-    <Link href={{ pathname: '/write', query: { c: props.community } }}>
+    <Link route="write" params={{ c: props.community }}>
       <NewThread>
         <NewThreadIcon>
           <PenIcon />

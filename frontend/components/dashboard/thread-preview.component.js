@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
 import Head from 'next/head';
 import distanceInWordsStrict from 'date-fns/distance_in_words_strict';
 import markdown from 'markdown-it';
 import emoji from 'markdown-it-emoji';
+import { Link } from '../../routes';
 
 import { scheme } from '../../lib/theme';
 import { QueryStringConsumer } from '../../lib/query.context';
@@ -169,7 +169,7 @@ export default props => {
   return (
     <QueryStringConsumer>
       {queryString => {
-        const activeThread = queryString.t === props.thread.id;
+        const activeThread = queryString.t === props.thread.slug;
         return (
           <>
             {activeThread && (
@@ -177,7 +177,7 @@ export default props => {
                 <title>RFS | {props.thread.title}</title>
               </Head>
             )}
-            <Link href={{ path: '/', query: { c: props.thread.community.id, t: props.thread.id } }}>
+            <Link route="dashboard" params={{ c: props.thread.community.slug, t: props.thread.slug }}>
               <Thread active={activeThread}>
                 <AuthorPicture picture={props.thread.author.avatar} />
                 <ThreadDetails>

@@ -70,7 +70,7 @@ const Publish = styled.button`
 
 const COMMUNITY_NAME_QUERY = gql`
   query COMMUNITY_NAME_QUERY($community: String!) {
-    community(id: $community) {
+    community(slug: $community) {
       name
     }
   }
@@ -78,10 +78,12 @@ const COMMUNITY_NAME_QUERY = gql`
 
 const CREATE_THREAD_MUTATION = gql`
   mutation CREATE_THREAD_MUTATION($community: String!, $title: String!, $content: String!) {
-    createThread(community: $community, title: $title, content: $content) {
+    createThread(slug: $community, title: $title, content: $content) {
       id
+      slug
       community {
         id
+        slug
       }
     }
   }
@@ -101,7 +103,7 @@ export default class Editor extends Component {
      * This is a monkey patch and should not be used but
      * it's a temporary solution due to the lack of subscriptions.
      */
-    window.location.href = `/?c=${newThread.community.id}&t=${newThread.id}`;
+    window.location.href = `/${newThread.community.slug}/${newThread.slug}`;
 
     // Router.push({
     //   pathname: '/',

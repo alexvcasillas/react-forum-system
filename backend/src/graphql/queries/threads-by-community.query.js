@@ -5,17 +5,27 @@ import { ThreadType } from '../types/thread.type';
 export const ThreadsByCommunityQuery = () => ({
   type: GraphQLList(ThreadType),
   args: {
-    community: { type: GraphQLNonNull(GraphQLString) },
+    community: { type: GraphQLString },
+    slug: { type: GraphQLString },
     filter: { type: GraphQLString },
   },
-  resolve: async (root, { community, filter = '' }, { headers, loaders, token, security, db }) => {
+  resolve: async (root, { community, slug, filter = '' }, { headers, loaders, token, security, db }) => {
     // return security.ensureAuthenticated(token).then(async authData => {
     let threads;
     try {
-      threads = await db.thread
-        .find({ community, title: { $regex: filter, $options: 'i' } })
-        .sort({ updatedAt: 'desc' })
-        .lean();
+      if (community) {
+        threads = await db.thread
+          .find({ community, title: { $regex: filter, $options: 'i' } })
+          .sort({ updatedAt: 'desc' })
+          .lean();
+      }
+      if (slug) {
+        const community = await db.community.findOne({ slug }).lean();
+        threads = await db.thread
+          .find({ community: community._id.toString(), title: { $regex: filter, $options: 'i' } })
+          .sort({ updatedAt: 'desc' })
+          .lean();
+      }
     } catch (error) {
       return new GraphQLError(
         Response({
@@ -24,6 +34,7 @@ export const ThreadsByCommunityQuery = () => ({
         }),
       );
     }
+
     await loaders.thread.cache(threads);
     return threads;
     // }, security.onRejectedAuthentication);

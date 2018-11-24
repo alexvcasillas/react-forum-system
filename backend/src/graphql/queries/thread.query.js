@@ -5,11 +5,13 @@ import { ThreadType } from '../types/thread.type';
 export const ThreadQuery = () => ({
   type: ThreadType,
   args: {
-    id: { type: GraphQLNonNull(GraphQLString) },
+    id: { type: GraphQLString },
+    slug: { type: GraphQLString },
   },
-  resolve: async (root, { id }, { headers, loaders, token, security, db }) => {
+  resolve: async (root, { id, slug }, { headers, loaders, token, security, db }) => {
     // return security.ensureAuthenticated(token).then(async authData => {
-    return await loaders.thread.load(id);
+    if (id) return await loaders.thread.load(id);
+    if (slug) return await db.thread.findOne({ slug }).lean();
     // }, security.onRejectedAuthentication);
   },
 });

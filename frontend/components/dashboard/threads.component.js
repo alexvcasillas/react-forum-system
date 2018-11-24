@@ -50,15 +50,17 @@ const CommunityName = styled.div`
 
 export const THREADS_BY_COMMUNITY_QUERY = gql`
   query THREADS_BY_COMMUNITY_QUERY($community: String!) {
-    threadsByCommunity(community: $community) {
+    threadsByCommunity(slug: $community) {
       id
       title
       content
+      slug
       createdAt
       replies_count
       users_replying
       community {
         id
+        slug
       }
       author {
         username
@@ -72,7 +74,7 @@ export const THREADS_BY_COMMUNITY_QUERY = gql`
 
 const COMMUNITY_NAME_QUERY = gql`
   query COMMUNITY_NAME_QUERY($community: String!) {
-    community(id: $community) {
+    community(slug: $community) {
       name
     }
   }
