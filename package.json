@@ -16,7 +16,7 @@
     "backend": "yarn workspace backend",
     "backend:dev": "NODE_ENV='development' yarn workspace backend dev",
     "backend:build": "NODE_ENV='production' yarn workspace backend build",
-    "backend:start": "yarn workspace backend start",
+    "backend:start": "NODE_ENV='production' yarn workspace backend start",
     "backend:deploy": "git subtree push --prefix backend heroku-backend master",
     "backend:logs": "heroku logs --tail --app rfs-backend"
   },
