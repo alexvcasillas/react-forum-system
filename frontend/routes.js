@@ -1,6 +1,15 @@
 const nextRoutes = require('next-routes');
 /* prettier-ignore */
-const routes = module.exports = nextRoutes();
+const routes = require('next-routes')
 
-routes.add({ name: 'dashboard', pattern: '/:c?/:t?', page: 'index' });
-routes.add({ name: 'write', pattern: '/write/:c', page: 'write' });
+module.exports = routes()
+  .add({
+    name: 'write',
+    pattern: '/write/:c',
+    page: 'write',
+  })
+  .add({
+    name: 'dashboard',
+    pattern: '/:c?/:t?',
+    page: '',
+  });

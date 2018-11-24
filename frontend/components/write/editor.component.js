@@ -116,7 +116,6 @@ export default class Editor extends Component {
 
   render() {
     const { title, content } = this.state;
-    console.log(this.props);
     return (
       <Wrapper>
         <Header>

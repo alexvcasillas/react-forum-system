@@ -18,7 +18,6 @@ const Write = styled.div`
 `;
 
 export default props => {
-  console.log({ props });
   return (
     <>
       <Head>
