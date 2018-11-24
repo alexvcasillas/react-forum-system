@@ -10,6 +10,6 @@ const handler = routes.getRequestHandler(app);
 app.prepare().then(() => {
   createServer(handler).listen(port, err => {
     if (err) throw err;
-    console.log(`> Fucking Ready on http://localhost:${port}`);
+    console.log(`> Ready on http://localhost:${port}`);
   });
 });

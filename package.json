@@ -10,7 +10,7 @@
     "frontend": "yarn workspace frontend",
     "frontend:dev": "NODE_ENV='development' yarn workspace frontend dev",
     "frontend:build": "NODE_ENV='production' yarn workspace frontend build",
-    "frontend:start": "yarn workspace frontend start",
+    "frontend:start": "NODE_ENV='production' yarn workspace frontend start",
     "frontend:deploy": "git subtree push --prefix frontend heroku-frontend master",
     "frontend:logs": "heroku logs --tail --app rfs-frontend",
     "backend": "yarn workspace backend",
