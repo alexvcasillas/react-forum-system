@@ -9,7 +9,7 @@ import Community from './community.component';
 
 const Communities = styled.div`
   grid-area: communities;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-right: 1px solid ${scheme.gray[4]};
 `;
 

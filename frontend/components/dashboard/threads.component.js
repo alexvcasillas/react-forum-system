@@ -15,7 +15,7 @@ import ThreadList from './thread-list.component';
 
 const Threads = styled.div`
   grid-area: threads;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-right: 1px solid ${scheme.gray[4]};
 `;
 
