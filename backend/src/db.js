@@ -1,15 +1,11 @@
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
 mongoose.Promise = Promise;
-const dbUser = 'rfs-admin';
-const dbPswd = 'ReactForumSystem03';
-const dbName = 'react-forum-system';
-const uri = `mongodb://${dbUser}:${dbPswd}@ds237748.mlab.com:37748/${dbName}`;
 
 export default callback => {
   mongoose
     .connect(
-      process.env.ENV === 'development' ? uri : process.env.MONGODB,
+      process.env.ENV === 'development' ? process.env.MONGODB : process.env.MONGODB,
       {
         autoIndex: false,
         useNewUrlParser: true,
